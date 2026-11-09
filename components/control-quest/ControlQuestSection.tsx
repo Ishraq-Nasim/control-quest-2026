@@ -5,7 +5,8 @@ import { CountUp } from "./CountUp";
 import { display, text } from "./fonts";
 import { Gallery } from "./Gallery";
 import { Label } from "./Label";
-import { MagnifierMotif, RoadLine } from "./Road";
+import { findPhoto, type Photo } from "./photos";
+import { RoadLine } from "./Road";
 import { Root } from "./Root";
 import { RouteStops } from "./RouteStops";
 import bg from "@/public/control-quest/bg.webp";
@@ -50,7 +51,30 @@ function Hero() {
   );
 }
 
+/**
+ * A photograph in a fixed frame that drifts slowly as the page scrolls past it.
+ * `opening` also lets the frame widen from an inset as it comes into view.
+ */
+function DriftPhoto({
+  photo,
+  className = "",
+  sizes,
+  opening = false,
+}: {
+  photo: Photo;
+  className?: string;
+  sizes: string;
+  opening?: boolean;
+}) {
+  return (
+    <div className={`cq-photo ${opening ? "cq-photo--opening" : ""} ${className}`}>
+      <Image src={photo.src} alt={photo.alt} fill sizes={sizes} className="cq-photo-img" />
+    </div>
+  );
+}
+
 function WhatIs() {
+  const introPhoto = findPhoto(about.photo);
   return (
     <section id="cq-what" aria-labelledby="cq-what-title" className="cq-section" style={field("--cq-field-1")}>
       <div className="cq-wrap cq-grid gap-y-12 lg:gap-y-24" data-reveal>
@@ -64,9 +88,11 @@ function WhatIs() {
             </p>
           ))}
         </div>
-        <div className="cq-rv max-w-[420px] lg:col-span-4 lg:max-w-none" style={at(2)}>
-          <MagnifierMotif className="cq-motif" />
-        </div>
+        {introPhoto && (
+          <div className="cq-rv lg:col-span-4" style={at(2)}>
+            <DriftPhoto photo={introPhoto} className="aspect-[4/5]" sizes="(min-width: 1024px) 30vw, 100vw" />
+          </div>
+        )}
         <blockquote className="cq-quote cq-rv lg:col-span-6 lg:col-start-7 lg:self-end" style={at(3)}>
           <p>{about.quote}</p>
         </blockquote>
@@ -155,21 +181,33 @@ function FiveDays() {
 }
 
 function Finale() {
+  const photo = findPhoto(finale.photo);
   return (
     <section aria-labelledby="cq-finale-title" className="cq-section" style={field("--cq-field-2")}>
       <div className="cq-wrap" data-reveal>
-        <div className="cq-grid gap-y-5">
-          <h2 id="cq-finale-title" className="cq-h2 cq-rv lg:col-span-6 lg:pl-[3vw]">
-            <Label icon={finale.heading.icon}>{finale.heading.text}</Label>
-          </h2>
-          <p className="cq-lead cq-rv lg:col-span-5 lg:col-start-8 lg:self-end" style={at(1)}>
+        <h2 id="cq-finale-title" className="cq-h2 cq-rv lg:pl-[3vw]">
+          <Label icon={finale.heading.icon}>{finale.heading.text}</Label>
+        </h2>
+        <div className="cq-grid mt-10 gap-y-6 lg:mt-14">
+          {photo && (
+            <figure className="cq-rv lg:col-span-8" style={at(1)}>
+              <DriftPhoto photo={photo} opening className="aspect-[3/2]" sizes="(min-width: 1024px) 60vw, 100vw" />
+              <figcaption className="cq-small cq-muted mt-3">
+                <Label icon={finale.photoCaption.icon}>{finale.photoCaption.text}</Label>
+              </figcaption>
+            </figure>
+          )}
+          <p
+            className={`cq-lead cq-rv lg:self-end ${photo ? "lg:col-span-4 lg:col-start-9 lg:pb-10" : "lg:col-span-6"}`}
+            style={at(2)}
+          >
             {finale.intro}
           </p>
         </div>
-        <div className="cq-rv mt-12 lg:mt-24" style={at(2)}>
+        <div className="cq-rv mt-16 lg:mt-24" style={at(3)}>
           <RouteStops idPrefix="cq-finale" stops={finale.stops} pickerLabel={finale.pickerLabel} />
         </div>
-        <div className="cq-rv mt-20 lg:mt-28" style={at(3)}>
+        <div className="cq-rv mt-20 lg:mt-28" style={at(4)}>
           <h3 className="cq-muted">
             <Label icon={finale.teamsLabel.icon}>{finale.teamsLabel.text}</Label>
           </h3>

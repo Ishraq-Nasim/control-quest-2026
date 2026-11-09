@@ -570,29 +570,64 @@
   gap: 12px;
 }
 
-/* ---------- Gallery ---------- */
+/* ---------- Photographs ---------- */
 
-.cq-gallery {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+.cq-photo {
+  position: relative;
+  overflow: hidden;
+  background: var(--cq-surface);
 }
 
-@media (min-width: 1024px) {
-  .cq-gallery {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
-  }
+.cq-photo-img {
+  object-fit: cover;
+  transform: scale(1.12);
+}
+
+/* ---------- Gallery: a strip that drifts sideways ---------- */
+
+.cq-strip {
+  overflow: hidden;
+}
+
+.cq-strip-track {
+  display: flex;
+  width: max-content;
+  animation: cq-strip 70s linear infinite;
+}
+
+.cq-strip[data-paused] .cq-strip-track,
+.cq-strip:focus-within .cq-strip-track {
+  animation-play-state: paused;
+}
+
+.cq-strip-set {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 12px 0 0;
+  list-style: none;
+}
+
+.cq-strip-item {
+  flex: none;
+  width: clamp(260px, 36vw, 560px);
+}
+
+.cq-strip-toggle {
+  font-family: var(--cq-font-text), sans-serif;
+  font-weight: 500;
+}
+
+.cq-strip-toggle[aria-pressed="true"] {
+  background: var(--cq-accent);
+  color: var(--cq-accent-ink);
 }
 
 .cq-thumb {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   padding: 0;
   border: 0;
@@ -682,6 +717,9 @@
   .cq-thumb:hover img {
     transform: scale(1.03);
   }
+  .cq-strip:hover .cq-strip-track {
+    animation-play-state: paused;
+  }
   .cq-btn:hover {
     background: var(--cq-tile-3);
   }
@@ -748,12 +786,46 @@
   animation: cq-cue 2.4s var(--cq-ease-in-out) 1.6s 3;
 }
 
-/* Signature move: the title block recedes as the hero leaves */
+@keyframes cq-strip {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes cq-drift {
+  from {
+    transform: scale(1.12) translate3d(0, -5%, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(0, 5%, 0);
+  }
+}
+
+@keyframes cq-open {
+  from {
+    clip-path: inset(0 14% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Signature move: the title block recedes as the hero leaves.
+   Photographs drift against the scroll; the finale photo opens to full width. */
 @supports (animation-timeline: view()) {
   .cq-hero-inner {
     animation: cq-recede linear both;
     animation-timeline: --cq-hero;
     animation-range: exit 0% exit 100%;
+  }
+  .cq-photo-img {
+    animation: cq-drift linear both;
+    animation-timeline: view();
+  }
+  .cq-photo--opening {
+    animation: cq-open linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
   }
 }
 
@@ -785,5 +857,30 @@
   }
   .cq-lightbox[open] {
     animation: none;
+  }
+  .cq-photo-img,
+  .cq-photo--opening {
+    animation: none;
+  }
+  .cq-photo--opening {
+    clip-path: none;
+  }
+  /* The strip stands still and scrolls by hand */
+  .cq-strip {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--cq-gutter);
+    padding-inline: var(--cq-gutter);
+    padding-bottom: 8px;
+  }
+  .cq-strip-track {
+    animation: none;
+  }
+  .cq-strip-set[aria-hidden],
+  .cq-strip-toggle {
+    display: none;
+  }
+  .cq-strip-item {
+    scroll-snap-align: start;
   }
 }

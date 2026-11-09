@@ -28,6 +28,8 @@ export const about = {
   ],
   quote:
     "Strong controls come to life when people understand them, challenge them and own them.",
+  /** Photo beside the intro (file in public/control-quest/photos/). */
+  photo: "01-case-clues.jpg",
 };
 
 export type Stat = { value: number; suffix?: string; label: string; icon: IconName };
@@ -143,6 +145,9 @@ export const days = {
 export const finale = {
   heading: { icon: "Trophy", text: "The Grand Finale" } as Labelled,
   intro: "Five days of clues. One final case. Powered by Surf Excel.",
+  /** Photo that opens the finale (file in public/control-quest/photos/). */
+  photo: "02-teams-at-work.jpg",
+  photoCaption: { icon: "Camera", text: "Teams at work on the case" } as Labelled,
   pickerLabel: "Choose a finale stage",
   stops: [
     {
@@ -254,10 +259,20 @@ export const gallery = {
    * Photos are auto-discovered from public/control-quest/photos/ at build time
    * (.jpg, .jpeg, .png, .webp, .avif), sorted by file name.
    * Give each one meaningful alt text here, keyed by file name.
-   * TODO: add alt text for each photo when the event photos are added.
+   * Note: the prize amount on the board in 04-champions.jpg is blurred
+   * (confidentiality: no money amounts).
    */
-  alt: {} as Record<string, string>,
+  alt: {
+    "01-case-clues.jpg": "Hands sorting Control Quest case cards, clue slips and envelopes on a table",
+    "02-teams-at-work.jpg": "Detective teams working through case sheets at standing tables, a countdown on the screens behind",
+    "03-buzzer-round.jpg": "Finalists at Control Quest buzzer podiums, facing a quiz question on screen",
+    "04-champions.jpg": "The champion team holds up the winners' board as confetti falls",
+    "05-group.jpg": "Group photo in front of the Control Quest screens",
+  } as Record<string, string>,
   fallbackAlt: (n: number) => `Control Quest 2026, Corporate Office: event photo ${n}`,
+  pause: { icon: "Pause", text: "Pause" } as Labelled,
+  play: { icon: "Play", text: "Play" } as Labelled,
+  stripLabel: "Event photos, moving strip",
   dialogLabel: "Event photo viewer",
   closeLabel: "Close photo viewer",
   prevLabel: "Previous photo",

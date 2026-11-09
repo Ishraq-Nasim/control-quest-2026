@@ -53,6 +53,9 @@ import {
   Workflow,
   X,
   Layers,
+  Camera,
+  Pause,
+  Play,
   type LucideIcon,
 } from "lucide-react";
 
@@ -71,6 +74,7 @@ export const icons = {
   Briefcase,
   CalendarDays,
   Calculator,
+  Camera,
   ChartColumn,
   ChartLine,
   ChevronLeft,
@@ -94,8 +98,10 @@ export const icons = {
   Mic,
   Network,
   Palette,
+  Pause,
   Percent,
   Plane,
+  Play,
   Receipt,
   RefreshCw,
   Repeat,
