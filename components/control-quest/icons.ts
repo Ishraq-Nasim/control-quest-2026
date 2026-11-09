@@ -56,6 +56,7 @@ import {
   Camera,
   Pause,
   Play,
+  Menu,
   type LucideIcon,
 } from "lucide-react";
 
@@ -95,6 +96,7 @@ export const icons = {
   ListChecks,
   Lock,
   Megaphone,
+  Menu,
   Mic,
   Network,
   Palette,

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import "./control-quest.css";
-import { about, days, finale, flow, hero, numbers, outcomes, role } from "./content";
+import { about, days, finale, flow, hero, nav, numbers, outcomes, role } from "./content";
 import { CountUp } from "./CountUp";
 import { display, text } from "./fonts";
 import { Gallery } from "./Gallery";
 import { Label } from "./Label";
-import { findPhoto, type Photo } from "./photos";
+import { Nav } from "./Nav";
+import { findPhoto, listPhotos, type Photo } from "./photos";
 import { RoadLine } from "./Road";
 import { Root } from "./Root";
 import { RouteStops } from "./RouteStops";
@@ -18,7 +19,7 @@ const field = (v: string) => ({ background: `var(${v})` }) as React.CSSPropertie
 
 function Hero() {
   return (
-    <header className="cq-hero">
+    <header id="cq-top" className="cq-hero">
       <div className="cq-hero-media">
         <Image src={bg} alt={hero.backgroundAlt} fill priority sizes="100vw" placeholder="blur" />
       </div>
@@ -103,7 +104,7 @@ function WhatIs() {
 
 function Numbers() {
   return (
-    <section aria-labelledby="cq-numbers-title" className="cq-section" style={field("--cq-field-2")}>
+    <section id="cq-numbers" aria-labelledby="cq-numbers-title" className="cq-section" style={field("--cq-field-2")}>
       <div className="cq-wrap cq-grid gap-y-12" data-reveal>
         <div className="lg:col-span-5">
           <div className="cq-sticky">
@@ -137,7 +138,7 @@ function Numbers() {
 
 function Flow() {
   return (
-    <section aria-labelledby="cq-flow-title" className="cq-section" style={field("--cq-field-3")}>
+    <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section" style={field("--cq-field-3")}>
       <div className="cq-wrap" data-reveal>
         <div className="cq-flow-stage">
           <h2 id="cq-flow-title" className="cq-h2 cq-flow-heading cq-rv mb-10 lg:mb-0">
@@ -162,7 +163,7 @@ function Flow() {
 
 function FiveDays() {
   return (
-    <section aria-labelledby="cq-days-title" className="cq-section" style={field("--cq-field-1")}>
+    <section id="cq-days" aria-labelledby="cq-days-title" className="cq-section" style={field("--cq-field-1")}>
       <div className="cq-wrap" data-reveal>
         <h2 id="cq-days-title" className="cq-h2 cq-rv lg:pl-[3vw]">
           <Label icon={days.heading.icon}>{days.heading.text}</Label>
@@ -183,7 +184,7 @@ function FiveDays() {
 function Finale() {
   const photo = findPhoto(finale.photo);
   return (
-    <section aria-labelledby="cq-finale-title" className="cq-section" style={field("--cq-field-2")}>
+    <section id="cq-finale" aria-labelledby="cq-finale-title" className="cq-section" style={field("--cq-field-2")}>
       <div className="cq-wrap" data-reveal>
         <h2 id="cq-finale-title" className="cq-h2 cq-rv lg:pl-[3vw]">
           <Label icon={finale.heading.icon}>{finale.heading.text}</Label>
@@ -226,7 +227,7 @@ function Finale() {
 
 function Outcomes() {
   return (
-    <section aria-labelledby="cq-why-title" className="cq-section" style={field("--cq-field-4")}>
+    <section id="cq-why" aria-labelledby="cq-why-title" className="cq-section" style={field("--cq-field-4")}>
       <div className="cq-wrap cq-grid gap-y-14" data-reveal>
         <div className="lg:col-span-5">
           <div className="cq-sticky">
@@ -259,7 +260,7 @@ function Outcomes() {
 
 function Role() {
   return (
-    <section aria-labelledby="cq-role-title" className="cq-section" style={field("--cq-field-3")}>
+    <section id="cq-role" aria-labelledby="cq-role-title" className="cq-section" style={field("--cq-field-3")}>
       <div className="cq-wrap cq-grid gap-y-14" data-reveal>
         <div className="lg:col-span-4">
           <h2 id="cq-role-title" className="cq-h2 cq-rv">
@@ -300,8 +301,11 @@ function Role() {
  * Ends after its last block, by design: no footer.
  */
 export default function ControlQuestSection() {
+  // The Photos link only appears when the gallery does.
+  const hasPhotos = listPhotos().length > 0;
   return (
     <Root className={`cq ${display.variable} ${text.variable}`}>
+      <Nav items={hasPhotos ? nav.items : nav.items.filter((i) => i.id !== "cq-gallery")} />
       <Hero />
       <WhatIs />
       <Numbers />

@@ -10,6 +10,24 @@ import type { IconName } from "./icons";
 
 export type Labelled = { icon: IconName; text: string };
 
+/** Top navigation. Each id matches a section's id on the page. */
+export const nav = {
+  label: "Sections",
+  home: "Control Quest 2026",
+  menu: { icon: "Menu", text: "Menu" } as Labelled,
+  close: { icon: "X", text: "Close" } as Labelled,
+  items: [
+    { id: "cq-what", icon: "Search", text: "Overview" },
+    { id: "cq-numbers", icon: "ChartColumn", text: "Numbers" },
+    { id: "cq-flow", icon: "Route", text: "How It Worked" },
+    { id: "cq-days", icon: "CalendarDays", text: "Five Days" },
+    { id: "cq-finale", icon: "Trophy", text: "Finale" },
+    { id: "cq-why", icon: "Target", text: "Why It Matters" },
+    { id: "cq-role", icon: "UserRound", text: "My Role" },
+    { id: "cq-gallery", icon: "Images", text: "Photos" },
+  ] as (Labelled & { id: string })[],
+};
+
 export const hero = {
   title: "Control Quest 2026",
   subtitle: { icon: "Route", text: "Detectives On The Road To Green" } as Labelled,
