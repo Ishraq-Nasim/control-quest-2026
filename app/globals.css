@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+html {
+  background: #06140d;
+  color-scheme: dark;
+  scrollbar-color: #2f5e40 #06140d;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #06140d;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

@@ -1,0 +1,789 @@
+/* Control Quest 2026: section styles. Every value comes from these tokens. */
+
+.cq {
+  /* Palette: taken from the supplied background and logo */
+  --cq-ground: #06140d;
+  --cq-field-1: #0a1d13;
+  --cq-field-2: #0d2418;
+  --cq-field-3: #08180f;
+  --cq-field-4: #11301f;
+  --cq-tile-1: #153a25;
+  --cq-tile-2: #1b4a2f;
+  --cq-tile-3: #22583a;
+  --cq-surface: #163a26;
+  --cq-ink: #eef3ea;
+  --cq-muted: #a9c0ae;
+  --cq-faint: #4f7a5e;
+  --cq-accent: #a3e635;
+  --cq-accent-ink: #0b2416;
+
+  /* Type: five steps */
+  --cq-small: 0.875rem;
+  --cq-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --cq-lead: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+  --cq-head: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
+  --cq-display: clamp(3.25rem, 1rem + 8.6vw, 9rem);
+
+  /* Space */
+  --cq-gutter: clamp(16px, 2.2vw, 32px);
+  --cq-gap: clamp(16px, 2vw, 32px);
+  --cq-section: clamp(72px, 8vw, 120px);
+
+  /* Motion */
+  --cq-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --cq-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  background: var(--cq-ground);
+  color: var(--cq-ink);
+  font-family: var(--cq-font-text), system-ui, sans-serif;
+  font-size: var(--cq-body);
+  line-height: 1.55;
+  font-variant-numeric: lining-nums;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cq ::selection {
+  background: var(--cq-accent);
+  color: var(--cq-accent-ink);
+}
+
+.cq :focus-visible {
+  outline: 3px solid var(--cq-accent);
+  outline-offset: 4px;
+}
+
+/* ---------- Frame ---------- */
+
+.cq-wrap {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--cq-gutter);
+}
+
+.cq-section {
+  padding-block: var(--cq-section);
+}
+
+.cq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--cq-gap);
+}
+
+@media (min-width: 1024px) {
+  .cq-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Type ---------- */
+
+.cq-h1,
+.cq-h2,
+.cq-h3,
+.cq-display-face {
+  font-family: var(--cq-font-display), "Arial Narrow", sans-serif;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.cq-h1 {
+  font-size: var(--cq-display);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.cq-h2 {
+  font-size: var(--cq-head);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.cq-h3 {
+  font-size: var(--cq-lead);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.cq-lead {
+  font-size: var(--cq-lead);
+  line-height: 1.3;
+}
+
+.cq-small {
+  font-size: var(--cq-small);
+  line-height: 1.5;
+}
+
+.cq-muted {
+  color: var(--cq-muted);
+}
+
+.cq-accent {
+  color: var(--cq-accent);
+}
+
+/* Icon before its text, matched to the text size */
+.cq-label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.4em;
+}
+
+/* The icon box is one line tall, so the glyph always sits on the first line */
+.cq-label > .cq-ico {
+  flex: none;
+  width: var(--cq-ico, 0.85em);
+  height: 1lh;
+}
+
+.cq-h2 {
+  --cq-ico: 0.62em;
+}
+
+.cq-h2 .cq-label {
+  gap: 0.28em;
+}
+
+.cq-ico--accent {
+  color: var(--cq-accent);
+}
+
+/* ---------- Hero ---------- */
+
+.cq-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cq-ground);
+  view-timeline-name: --cq-hero;
+}
+
+.cq-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.cq-hero-media img {
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+
+/* The one gradient on the page: a neutral scrim, darkest behind the text */
+.cq-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient( /* taste-skill-ignore: neutral scrim over the hero photo, allowed by the brief */
+    to bottom,
+    rgb(0 0 0 / 0.78) 0%,
+    rgb(0 0 0 / 0.66) 48%,
+    rgb(0 0 0 / 0.42) 78%,
+    rgb(0 0 0 / 0.6) 100%
+  );
+}
+
+.cq-hero-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: clamp(48px, 9svh, 112px);
+  padding-bottom: clamp(96px, 14svh, 160px);
+  transform-origin: 50% 30%;
+}
+
+.cq-hero-logo {
+  width: clamp(150px, 15vw, 230px);
+  height: auto;
+}
+
+.cq-hero-title {
+  margin-top: clamp(20px, 3svh, 36px);
+}
+
+.cq-hero-sub {
+  margin-top: 0.6em;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--cq-lead);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.cq-hero-support {
+  margin-top: clamp(16px, 2.4svh, 28px);
+  max-width: 44ch;
+}
+
+.cq-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 4svh, 40px);
+  translate: -50% 0;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding-inline: 12px;
+  color: var(--cq-ink);
+  text-decoration: none;
+  font-size: var(--cq-body);
+  transition: color 200ms ease;
+}
+
+/* ---------- What is ---------- */
+
+.cq-intro-para + .cq-intro-para {
+  margin-top: 1em;
+}
+
+/* On a phone the two intro paragraphs read as running text, not statements */
+@media (max-width: 767px) {
+  .cq-intro-para.cq-lead {
+    font-size: var(--cq-body);
+    line-height: 1.55;
+  }
+}
+
+.cq-quote {
+  font-family: var(--cq-font-text), sans-serif;
+  font-weight: 500;
+  font-size: var(--cq-lead);
+  line-height: 1.25;
+  max-width: 26ch;
+}
+
+.cq-motif {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- Numbers: a ledger aligned on the figures ---------- */
+
+.cq-ledger {
+  display: grid;
+  row-gap: clamp(12px, 1.6vw, 20px);
+}
+
+.cq-ledger-row {
+  display: grid;
+  grid-template-columns: 3ch 0.6ch minmax(0, 1fr);
+  column-gap: 0.18em;
+  align-items: baseline;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--cq-head);
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.cq-ledger-fig {
+  text-align: right;
+  letter-spacing: -0.01em;
+}
+
+.cq-ledger-suffix {
+  color: var(--cq-accent);
+}
+
+.cq-ledger-cap {
+  font-family: var(--cq-font-text), sans-serif;
+  font-weight: 500;
+  font-size: var(--cq-body);
+  line-height: 1.3;
+  padding-left: 0.6rem;
+}
+
+@media (min-width: 1024px) {
+  .cq-ledger-cap {
+    font-size: var(--cq-lead);
+    padding-left: 1rem;
+  }
+  .cq-sticky {
+    position: sticky;
+    top: 18vh;
+  }
+}
+
+/* ---------- Flow: tiles that grow ---------- */
+
+.cq-flow {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cq-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(18px, 2vw, 28px);
+  background: var(--cq-tile-1);
+}
+
+/* On a phone the tiles still grow in order, but stay close to their content */
+.cq-tile:nth-child(1) { min-height: 96px; background: var(--cq-tile-1); }
+.cq-tile:nth-child(2) { min-height: 116px; background: var(--cq-tile-2); }
+.cq-tile:nth-child(3) { min-height: 136px; background: var(--cq-tile-3); }
+.cq-tile:nth-child(4) { min-height: 156px; background: var(--cq-accent); color: var(--cq-accent-ink); }
+.cq-tile:nth-child(4) .cq-muted-on-tile { color: var(--cq-accent-ink); }
+.cq-muted-on-tile { color: var(--cq-ink); }
+
+.cq-road {
+  position: absolute;
+  pointer-events: none;
+}
+
+.cq-flow-road {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .cq-flow-stage {
+    position: relative;
+    height: clamp(520px, 66vh, 680px);
+  }
+  .cq-flow-heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+  }
+  .cq-flow {
+    position: absolute;
+    inset: 0;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: end;
+  }
+  .cq-tile { min-height: 0; }
+  .cq-tile:nth-child(1) { grid-column: span 2; height: 34%; }
+  .cq-tile:nth-child(2) { grid-column: span 3; height: 50%; }
+  .cq-tile:nth-child(3) { grid-column: span 3; height: 72%; }
+  .cq-tile:nth-child(4) { grid-column: span 4; height: 100%; }
+  .cq-flow-road {
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    width: 100%;
+    height: 8px;
+    z-index: 1;
+  }
+}
+
+/* ---------- Stops: the five days and the finale ---------- */
+
+.cq-tablist {
+  display: none;
+}
+
+.cq-js .cq-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cq-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 0;
+  background: var(--cq-surface);
+  color: var(--cq-ink);
+  font: inherit;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--cq-body);
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 140ms var(--cq-ease-out), background-color 200ms ease, color 200ms ease;
+}
+
+.cq-tab:active {
+  transform: scale(0.97);
+}
+
+.cq-tab[aria-selected="true"] {
+  background: var(--cq-accent);
+  color: var(--cq-accent-ink);
+}
+
+.cq-tab-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cq-faint);
+}
+
+.cq-tab[aria-selected="true"] .cq-tab-dot {
+  background: var(--cq-accent-ink);
+}
+
+.cq-tab-marker {
+  white-space: nowrap;
+}
+
+.cq-tab-title {
+  display: none;
+}
+
+.cq-tab-road {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .cq-js .cq-tablist {
+    position: relative;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .cq-tab-road {
+    display: block;
+    left: 15px;
+    top: 30px;
+    bottom: 30px;
+    width: 6px;
+    height: calc(100% - 60px);
+  }
+  .cq-tab {
+    width: 100%;
+    gap: 22px;
+    padding: 14px 12px 14px 10px;
+    background: transparent;
+    color: var(--cq-muted);
+    font-size: var(--cq-lead);
+  }
+  .cq-tab[aria-selected="true"] {
+    background: var(--cq-surface);
+    color: var(--cq-ink);
+  }
+  .cq-tab-dot {
+    position: relative;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
+    background: var(--cq-faint);
+  }
+  .cq-tab[aria-selected="true"] .cq-tab-dot {
+    background: var(--cq-accent);
+  }
+  .cq-tab-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .cq-tab-marker {
+    font-size: var(--cq-body);
+    color: inherit;
+  }
+  .cq-tab[aria-selected="true"] .cq-tab-marker {
+    color: var(--cq-accent);
+  }
+  .cq-tab-title {
+    display: inline-flex;
+  }
+}
+
+/* Panels: stacked without script, one at a time with it */
+.cq-panel + .cq-panel {
+  margin-top: 72px;
+}
+
+.cq-js .cq-panel + .cq-panel {
+  margin-top: 0;
+}
+
+.cq-js .cq-panel:not([data-active]) {
+  display: none;
+}
+
+.cq-panel-marker {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-head);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--cq-accent);
+}
+
+.cq-topics {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px 32px;
+}
+
+@media (min-width: 640px) {
+  .cq-topics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cq-teams {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px clamp(24px, 3vw, 48px);
+}
+
+/* ---------- Outcomes ---------- */
+
+.cq-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cq-points li + li {
+  margin-top: 6px;
+}
+
+/* ---------- Role ---------- */
+
+.cq-role-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+/* ---------- Gallery ---------- */
+
+.cq-gallery {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 1024px) {
+  .cq-gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.cq-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: var(--cq-surface);
+  cursor: zoom-in;
+}
+
+.cq-thumb img {
+  object-fit: cover;
+  transition: transform 300ms var(--cq-ease-out);
+}
+
+.cq-thumb:active img {
+  transform: scale(0.98);
+}
+
+.cq-lightbox {
+  width: min(1200px, 100vw - 2 * var(--cq-gutter));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cq-ink);
+  overflow: visible;
+}
+
+.cq-lightbox::backdrop {
+  background: rgb(3 10 6 / 0.92);
+}
+
+.cq-lightbox[open] {
+  animation: cq-dialog-in 220ms var(--cq-ease-out);
+}
+
+.cq-lightbox-frame {
+  position: relative;
+  width: 100%;
+  height: min(78svh, 800px);
+}
+
+.cq-lightbox-frame img {
+  object-fit: contain;
+}
+
+.cq-lightbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cq-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 0;
+  background: var(--cq-surface);
+  color: var(--cq-ink);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 140ms var(--cq-ease-out), background-color 200ms ease;
+}
+
+.cq-btn:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Hover: fine pointers only ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .cq-scroll-cue:hover {
+    color: var(--cq-accent);
+  }
+  .cq-tab:not([aria-selected="true"]):hover {
+    color: var(--cq-ink);
+  }
+  .cq-tab:not([aria-selected="true"]):hover .cq-tab-dot {
+    background: var(--cq-muted);
+  }
+  .cq-thumb:hover img {
+    transform: scale(1.03);
+  }
+  .cq-btn:hover {
+    background: var(--cq-tile-3);
+  }
+}
+
+/* ---------- Motion ---------- */
+
+/* Entrances: heading, then text, then visual. Only hidden once script runs. */
+.cq-rv {
+  transition:
+    opacity 800ms var(--cq-ease-out),
+    transform 800ms var(--cq-ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.cq-js [data-reveal]:not([data-in]) .cq-rv {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+
+/* Hero: content rises on load; the picture settles slowly, once */
+@keyframes cq-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+@keyframes cq-settle {
+  from {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes cq-recede {
+  to {
+    transform: scale(0.93);
+    opacity: 0.35;
+  }
+}
+
+@keyframes cq-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes cq-cue {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 4px, 0); }
+}
+
+.cq-hero-media img {
+  animation: cq-settle 18s var(--cq-ease-out) both;
+}
+
+.cq-hero-in {
+  animation: cq-rise 900ms var(--cq-ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 100ms);
+}
+
+.cq-scroll-cue .cq-ico {
+  animation: cq-cue 2.4s var(--cq-ease-in-out) 1.6s 3;
+}
+
+/* Signature move: the title block recedes as the hero leaves */
+@supports (animation-timeline: view()) {
+  .cq-hero-inner {
+    animation: cq-recede linear both;
+    animation-timeline: --cq-hero;
+    animation-range: exit 0% exit 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cq-hero-media img,
+  .cq-hero-inner,
+  .cq-scroll-cue .cq-ico {
+    animation: none;
+  }
+  .cq-hero-in {
+    animation: none;
+  }
+  .cq-rv {
+    transition: none;
+  }
+  .cq-js [data-reveal]:not([data-in]) .cq-rv {
+    opacity: 1;
+    transform: none;
+  }
+  .cq-tab,
+  .cq-btn,
+  .cq-thumb img {
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  .cq-tab:active,
+  .cq-btn:active,
+  .cq-thumb:active img {
+    transform: none;
+  }
+  .cq-lightbox[open] {
+    animation: none;
+  }
+}
