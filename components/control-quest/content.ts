@@ -17,14 +17,14 @@ export const nav = {
   menu: { icon: "Menu", text: "Menu" } as Labelled,
   close: { icon: "X", text: "Close" } as Labelled,
   items: [
-    { id: "cq-what", icon: "Search", text: "Overview" },
-    { id: "cq-numbers", icon: "ChartColumn", text: "Numbers" },
-    { id: "cq-flow", icon: "Route", text: "How It Worked" },
+    { id: "cq-what", icon: "Search", text: "The Quest" },
+    { id: "cq-numbers", icon: "ChartColumn", text: "In Numbers" },
+    { id: "cq-flow", icon: "Route", text: "The Format" },
     { id: "cq-days", icon: "CalendarDays", text: "Five Days" },
-    { id: "cq-finale", icon: "Trophy", text: "Finale" },
+    { id: "cq-finale", icon: "Trophy", text: "Grand Finale" },
     { id: "cq-why", icon: "Target", text: "Why It Matters" },
     { id: "cq-role", icon: "UserRound", text: "My Role" },
-    { id: "cq-gallery", icon: "Images", text: "Photos" },
+    { id: "cq-gallery", icon: "Images", text: "Gallery" },
   ] as (Labelled & { id: string })[],
 };
 

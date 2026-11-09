@@ -293,7 +293,7 @@
 }
 
 /* Wide screens: every section in the bar, no menu */
-@media (min-width: 1320px) {
+@media (min-width: 1400px) {
   .cq-nav .cq-nav-list {
     display: flex;
   }
@@ -308,7 +308,7 @@
   display: none;
 }
 
-@media (max-width: 1319px) {
+@media (max-width: 1399px) {
   .cq:not(.cq-js) .cq-nav-list {
     display: flex;
     overflow-x: auto;
