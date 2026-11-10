@@ -21,12 +21,15 @@ type Props = {
 export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel }: Props) {
   const [active, setActive] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
+  // Keyboard switching is instant; a click gets a short fade-in.
+  const [viaKey, setViaKey] = useState(true);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => setEnhanced(true), []);
 
   const select = (i: number, focus = false) => {
     const next = (i + stops.length) % stops.length;
+    setViaKey(focus);
     setActive(next);
     if (focus) tabs.current[next]?.focus();
   };
@@ -90,7 +93,7 @@ export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel }: Props)
       </div>
 
       {/* The stop itself */}
-      <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1">
+      <div className="lg:col-span-7 lg:col-start-1 lg:row-start-1">
         {stops.map((s, i) => (
           <div
             key={s.id}
@@ -99,22 +102,33 @@ export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel }: Props)
             aria-labelledby={enhanced ? `${idPrefix}-tab-${s.id}` : undefined}
             tabIndex={enhanced ? 0 : undefined}
             data-active={i === active ? "" : undefined}
-            className="cq-panel"
+            data-instant={viaKey || undefined}
+            className="cq-panel cq-card"
           >
             <p className="cq-panel-marker">{s.marker}</p>
-            <h3 className="cq-h3 mt-4 lg:mt-6">
+            <h3 className="cq-panel-title">
               <Label icon={s.icon}>{s.title}</Label>
             </h3>
-            <p className="cq-lead mt-3 max-w-[32ch]">{s.summary}</p>
+            <p className="cq-lead mt-3 max-w-[34ch]">{s.summary}</p>
+            {s.figure && (
+              <p className="cq-panel-figure">
+                <span className="cq-panel-figure-value">{s.figure.value}</span>
+                <span className="cq-panel-figure-caption">{s.figure.caption}</span>
+              </p>
+            )}
             {s.topics && topicsLabel && (
-              <div className="mt-8 lg:mt-10">
+              <div className="mt-8">
                 <p className="cq-muted">
-                  <Label icon={topicsLabel.icon}>{topicsLabel.text}</Label>
+                  <Label icon={topicsLabel.icon} tone="accent">
+                    {topicsLabel.text}
+                  </Label>
                 </p>
                 <ul className="cq-topics mt-4">
                   {s.topics.map((t) => (
-                    <li key={t.text}>
-                      <Label icon={t.icon}>{t.text}</Label>
+                    <li key={t.text} className="cq-topic">
+                      <Label icon={t.icon} tone="accent">
+                        {t.text}
+                      </Label>
                     </li>
                   ))}
                 </ul>

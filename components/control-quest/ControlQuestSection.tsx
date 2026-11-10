@@ -1,7 +1,8 @@
 import Image from "next/image";
 import "./control-quest.css";
-import { about, days, finale, flow, hero, nav, numbers, outcomes, role } from "./content";
+import { about, days, finale, flow, hero, nav, numbers, outcomes, role, type Labelled } from "./content";
 import { CountUp } from "./CountUp";
+import { Detective } from "./Detective";
 import { display, text } from "./fonts";
 import { Gallery } from "./Gallery";
 import { Label } from "./Label";
@@ -30,7 +31,7 @@ function Hero() {
           alt={hero.logoAlt}
           className="cq-hero-logo cq-hero-in"
           style={at(0)}
-          sizes="(min-width: 1024px) 230px, 150px"
+          sizes="(min-width: 1024px) 340px, 220px"
           priority
         />
         <h1 className="cq-h1 cq-hero-title cq-hero-in" style={at(1)}>
@@ -49,6 +50,24 @@ function Hero() {
         <Label icon={hero.scrollCue.icon}>{hero.scrollCue.text}</Label>
       </a>
     </header>
+  );
+}
+
+/** Section title across the top, with an optional note on the right. */
+function SectionHead({ id, heading, aside }: { id: string; heading: Labelled; aside?: Labelled }) {
+  return (
+    <div className="cq-head-row">
+      <h2 id={id} className="cq-h2 cq-rv">
+        <Label icon={heading.icon}>{heading.text}</Label>
+      </h2>
+      {aside && (
+        <p className="cq-head-aside cq-rv" style={at(1)}>
+          <Label icon={aside.icon} tone="accent">
+            {aside.text}
+          </Label>
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -75,28 +94,54 @@ function DriftPhoto({
 }
 
 function WhatIs() {
-  const introPhoto = findPhoto(about.photo);
   return (
     <section id="cq-what" aria-labelledby="cq-what-title" className="cq-section" style={field("--cq-field-1")}>
-      <div className="cq-wrap cq-grid gap-y-12 lg:gap-y-24" data-reveal>
-        <h2 id="cq-what-title" className="cq-h2 cq-rv lg:col-span-5">
-          <Label icon={about.heading.icon}>{about.heading.text}</Label>
-        </h2>
-        <div className="cq-rv lg:col-span-7 lg:col-start-6 lg:pt-3" style={at(1)}>
-          {about.paragraphs.map((p) => (
-            <p key={p} className="cq-lead cq-intro-para">
-              {p}
-            </p>
-          ))}
-        </div>
-        {introPhoto && (
-          <div className="cq-rv lg:col-span-4" style={at(2)}>
-            <DriftPhoto photo={introPhoto} className="aspect-[4/5]" sizes="(min-width: 1024px) 30vw, 100vw" />
+      <div className="cq-wrap" data-reveal>
+        <SectionHead id="cq-what-title" heading={about.heading} />
+        <div className="cq-grid gap-y-10">
+          <div className="cq-rv order-last flex justify-center lg:order-none lg:col-span-4 lg:items-end" style={at(3)}>
+            <Detective label={about.silhouetteAlt} className="w-[min(100%,300px)] lg:w-full lg:max-w-[360px]" />
           </div>
-        )}
-        <blockquote className="cq-quote cq-rv lg:col-span-6 lg:col-start-7 lg:self-end" style={at(3)}>
-          <p>{about.quote}</p>
-        </blockquote>
+
+          <div className="grid gap-4 lg:col-span-8">
+            <div className="grid gap-4 md:grid-cols-2">
+              {about.facts.map((f, i) => (
+                <div key={f.title} className="cq-card cq-rv" style={at(i + 1)}>
+                  <h3 className="cq-h3">
+                    <Label icon={f.icon} tone="accent">
+                      {f.title}
+                    </Label>
+                  </h3>
+                  <p className="cq-text-lg mt-3">{f.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="cq-card cq-rv" style={at(3)}>
+              <h3 className="cq-h3">
+                <Label icon={about.edition.icon} tone="accent">
+                  {about.edition.text}
+                </Label>
+              </h3>
+              <ul className="cq-swaps mt-5">
+                {about.swaps.map((s) => (
+                  <li key={s.from} className="cq-swap">
+                    <span className="cq-swap-from">
+                      <Label icon={s.icon} tone="accent">
+                        {s.from}
+                      </Label>
+                    </span>
+                    <span className="cq-swap-to">{s.to}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <blockquote className="cq-quote cq-rv mt-6 lg:mt-10" style={at(4)}>
+              <p>{about.quote}</p>
+            </blockquote>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -105,28 +150,23 @@ function WhatIs() {
 function Numbers() {
   return (
     <section id="cq-numbers" aria-labelledby="cq-numbers-title" className="cq-section" style={field("--cq-field-2")}>
-      <div className="cq-wrap cq-grid gap-y-12" data-reveal>
-        <div className="lg:col-span-5">
-          <div className="cq-sticky">
-            <h2 id="cq-numbers-title" className="cq-h2 cq-rv">
-              <Label icon={numbers.heading.icon}>{numbers.heading.text}</Label>
-            </h2>
-            <p className="cq-muted cq-rv mt-5" style={at(1)}>
-              {numbers.note}
-            </p>
-          </div>
-        </div>
-        <dl className="cq-ledger md:grid-cols-2 md:gap-x-8 lg:col-span-6 lg:col-start-7 lg:grid-cols-1">
+      <div className="cq-wrap" data-reveal>
+        <SectionHead id="cq-numbers-title" heading={numbers.heading} aside={numbers.note} />
+        <dl className="cq-stats">
           {numbers.stats.map((s, i) => (
-            <div key={s.label} className="cq-ledger-row cq-rv" style={at(Math.min(i + 1, 6))}>
-              <dt className="cq-ledger-cap order-3">
-                <Label icon={s.icon}>{s.label}</Label>
+            <div key={s.label} className="cq-card cq-stat cq-rv" style={at(Math.min(i + 1, 8))} data-key={s.key || undefined}>
+              <dt className="cq-stat-label">
+                <Label icon={s.icon} tone="accent">
+                  {s.label}
+                </Label>
               </dt>
-              <dd className="cq-ledger-fig order-1">
+              <dd className="cq-stat-fig">
                 <CountUp value={s.value} />
-              </dd>
-              <dd className="cq-ledger-suffix order-2" aria-label={s.suffix ? "or more" : undefined}>
-                {s.suffix ?? ""}
+                {s.suffix && (
+                  <span className="cq-stat-suffix" aria-label="or more">
+                    {s.suffix}
+                  </span>
+                )}
               </dd>
             </div>
           ))}
@@ -140,22 +180,18 @@ function Flow() {
   return (
     <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section" style={field("--cq-field-3")}>
       <div className="cq-wrap" data-reveal>
-        <div className="cq-flow-stage">
-          <h2 id="cq-flow-title" className="cq-h2 cq-flow-heading cq-rv mb-10 lg:mb-0">
-            <Label icon={flow.heading.icon}>{flow.heading.text}</Label>
-          </h2>
-          <ol className="cq-flow">
-            {flow.steps.map((s, i) => (
-              <li key={s.title} className="cq-tile cq-rv" style={at(i + 1)}>
-                <h3 className="cq-h3">
-                  <Label icon={s.icon}>{s.title}</Label>
-                </h3>
-                <p className="cq-muted-on-tile max-w-[24ch]">{s.text}</p>
-              </li>
-            ))}
-            <RoadLine className="cq-road cq-flow-road" />
-          </ol>
-        </div>
+        <SectionHead id="cq-flow-title" heading={flow.heading} />
+        <ol className="cq-flow">
+          {flow.steps.map((s, i) => (
+            <li key={s.title} className="cq-tile cq-rv" style={at(i + 1)}>
+              <h3 className="cq-h3 cq-tile-title">
+                <Label icon={s.icon}>{s.title}</Label>
+              </h3>
+              <p className="cq-lead cq-muted-on-tile mt-2 max-w-[22ch]">{s.text}</p>
+            </li>
+          ))}
+          <RoadLine className="cq-road cq-flow-road" />
+        </ol>
       </div>
     </section>
   );
@@ -165,10 +201,8 @@ function FiveDays() {
   return (
     <section id="cq-days" aria-labelledby="cq-days-title" className="cq-section" style={field("--cq-field-1")}>
       <div className="cq-wrap" data-reveal>
-        <h2 id="cq-days-title" className="cq-h2 cq-rv lg:pl-[3vw]">
-          <Label icon={days.heading.icon}>{days.heading.text}</Label>
-        </h2>
-        <div className="cq-rv mt-12 lg:mt-24" style={at(1)}>
+        <SectionHead id="cq-days-title" heading={days.heading} />
+        <div className="cq-rv" style={at(1)}>
           <RouteStops
             idPrefix="cq-day"
             stops={days.stops}
@@ -186,39 +220,38 @@ function Finale() {
   return (
     <section id="cq-finale" aria-labelledby="cq-finale-title" className="cq-section" style={field("--cq-field-2")}>
       <div className="cq-wrap" data-reveal>
-        <h2 id="cq-finale-title" className="cq-h2 cq-rv lg:pl-[3vw]">
-          <Label icon={finale.heading.icon}>{finale.heading.text}</Label>
-        </h2>
-        <div className="cq-grid mt-10 gap-y-6 lg:mt-14">
+        <SectionHead id="cq-finale-title" heading={finale.heading} />
+        <div className="cq-grid gap-y-10">
           {photo && (
-            <figure className="cq-rv lg:col-span-8" style={at(1)}>
-              <DriftPhoto photo={photo} opening className="aspect-[3/2]" sizes="(min-width: 1024px) 60vw, 100vw" />
+            <figure className="cq-rv lg:col-span-5" style={at(1)}>
+              <DriftPhoto photo={photo} opening className="aspect-[4/3]" sizes="(min-width: 1024px) 40vw, 100vw" />
               <figcaption className="cq-small cq-muted mt-3">
                 <Label icon={finale.photoCaption.icon}>{finale.photoCaption.text}</Label>
               </figcaption>
             </figure>
           )}
-          <p
-            className={`cq-lead cq-rv lg:self-end ${photo ? "lg:col-span-4 lg:col-start-9 lg:pb-10" : "lg:col-span-6"}`}
-            style={at(2)}
-          >
-            {finale.intro}
-          </p>
+          <div className={`flex flex-col gap-8 ${photo ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-12"}`}>
+            <p className="cq-quote cq-rv" style={at(2)}>
+              {finale.intro}
+            </p>
+            <div className="cq-card cq-rv" style={at(3)}>
+              <h3 className="cq-h3">
+                <Label icon={finale.teamsLabel.icon} tone="accent">
+                  {finale.teamsLabel.text}
+                </Label>
+              </h3>
+              <ul className="cq-teams cq-text-lg mt-5">
+                {finale.teams.map((t) => (
+                  <li key={t}>
+                    <Label icon="HatGlasses">{t}</Label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="cq-rv mt-16 lg:mt-24" style={at(3)}>
+        <div className="cq-rv mt-16 lg:mt-24" style={at(4)}>
           <RouteStops idPrefix="cq-finale" stops={finale.stops} pickerLabel={finale.pickerLabel} />
-        </div>
-        <div className="cq-rv mt-20 lg:mt-28" style={at(4)}>
-          <h3 className="cq-muted">
-            <Label icon={finale.teamsLabel.icon}>{finale.teamsLabel.text}</Label>
-          </h3>
-          <ul className="cq-teams cq-lead mt-4">
-            {finale.teams.map((t) => (
-              <li key={t}>
-                <Label icon="HatGlasses">{t}</Label>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>
@@ -228,24 +261,17 @@ function Finale() {
 function Outcomes() {
   return (
     <section id="cq-why" aria-labelledby="cq-why-title" className="cq-section" style={field("--cq-field-4")}>
-      <div className="cq-wrap cq-grid gap-y-14" data-reveal>
-        <div className="lg:col-span-5">
-          <div className="cq-sticky">
-            <h2 id="cq-why-title" className="cq-h2 cq-rv">
-              <Label icon={outcomes.heading.icon}>{outcomes.heading.text}</Label>
-            </h2>
-            <p className="cq-muted cq-rv mt-5" style={at(1)}>
-              <Label icon={outcomes.note.icon}>{outcomes.note.text}</Label>
-            </p>
-          </div>
-        </div>
-        <ul className="grid gap-14 lg:col-span-6 lg:col-start-7 lg:gap-28 lg:pt-4">
+      <div className="cq-wrap" data-reveal>
+        <SectionHead id="cq-why-title" heading={outcomes.heading} aside={outcomes.note} />
+        <ul className="cq-outcomes">
           {outcomes.items.map((o, i) => (
-            <li key={o.title} className="cq-rv" style={at(i + 1)}>
+            <li key={o.title} className="cq-card cq-rv" style={at(i + 1)}>
               <h3 className="cq-h3">
-                <Label icon={o.icon}>{o.title}</Label>
+                <Label icon={o.icon} tone="accent">
+                  {o.title}
+                </Label>
               </h3>
-              <ul className="cq-points cq-lead mt-4">
+              <ul className="cq-points cq-text-lg mt-5">
                 {o.points.map((p) => (
                   <li key={p}>{p}</li>
                 ))}
@@ -261,35 +287,38 @@ function Outcomes() {
 function Role() {
   return (
     <section id="cq-role" aria-labelledby="cq-role-title" className="cq-section" style={field("--cq-field-3")}>
-      <div className="cq-wrap cq-grid gap-y-14" data-reveal>
-        <div className="lg:col-span-4">
-          <h2 id="cq-role-title" className="cq-h2 cq-rv">
-            <Label icon={role.heading.icon}>{role.heading.text}</Label>
-          </h2>
-          <p className="cq-h3 cq-rv mt-4" style={at(1)}>
-            {role.name}
-          </p>
-          <p className="cq-rv mt-4 max-w-[34ch]" style={at(2)}>
-            <Label icon={role.line.icon}>{role.line.text}</Label>
-          </p>
-        </div>
-        <div className="grid gap-12 sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:pt-4">
-          {role.groups.map((g, i) => (
-            <div key={g.label.text} className="cq-rv" style={at(i + 2)}>
-              <h3 className="cq-h3">
-                <Label icon={g.label.icon} tone="accent">
-                  {g.label.text}
-                </Label>
-              </h3>
-              <ul className="cq-role-list cq-lead mt-6">
-                {g.items.map((it) => (
-                  <li key={it.text}>
-                    <Label icon={it.icon}>{it.text}</Label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+      <div className="cq-wrap" data-reveal>
+        <SectionHead id="cq-role-title" heading={role.heading} />
+        <div className="cq-grid gap-y-8">
+          <div className="lg:col-span-4">
+            <p className="cq-name cq-rv" style={at(1)}>
+              {role.name}
+            </p>
+            <p className="cq-lead cq-rv mt-4" style={at(2)}>
+              <Label icon={role.line.icon} tone="accent">
+                {role.line.text}
+              </Label>
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+            {/* One gap value between the label and every item, so the rhythm is even */}
+            {role.groups.map((g, i) => (
+              <div key={g.label.text} className="cq-card cq-role-group cq-rv" style={at(i + 3)}>
+                <h3 className="cq-role-label">
+                  <Label icon={g.label.icon} tone="accent">
+                    {g.label.text}
+                  </Label>
+                </h3>
+                <ul className="cq-role-list">
+                  {g.items.map((it) => (
+                    <li key={it.text}>
+                      <Label icon={it.icon}>{it.text}</Label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -301,7 +330,7 @@ function Role() {
  * Ends after its last block, by design: no footer.
  */
 export default function ControlQuestSection() {
-  // The Photos link only appears when the gallery does.
+  // The Gallery link only appears when the gallery does.
   const hasPhotos = listPhotos().length > 0;
   return (
     <Root className={`cq ${display.variable} ${text.variable}`}>

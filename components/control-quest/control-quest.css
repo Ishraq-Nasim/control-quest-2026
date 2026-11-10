@@ -21,8 +21,10 @@
   --cq-small: 0.875rem;
   --cq-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --cq-lead: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+  --cq-text-lg: clamp(1.125rem, 1rem + 0.55vw, 1.5rem);
+  --cq-title: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
   --cq-head: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
-  --cq-display: clamp(3.25rem, 1rem + 8.6vw, 9rem);
+  --cq-display: clamp(3rem, 1rem + 6.6vw, 7.5rem);
 
   /* Space */
   --cq-gutter: clamp(16px, 2.2vw, 32px);
@@ -358,32 +360,34 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: clamp(48px, 9svh, 112px);
-  padding-bottom: clamp(96px, 14svh, 160px);
+  padding-top: clamp(32px, 6svh, 80px);
+  padding-bottom: clamp(88px, 12svh, 140px);
   transform-origin: 50% 30%;
 }
 
 .cq-hero-logo {
-  width: clamp(150px, 15vw, 230px);
+  width: clamp(210px, 22vw, 340px);
   height: auto;
 }
 
 .cq-hero-title {
-  margin-top: clamp(20px, 3svh, 36px);
+  margin-top: clamp(16px, 2.4svh, 28px);
 }
 
 .cq-hero-sub {
-  margin-top: 0.6em;
+  margin-top: 0.5em;
   font-family: var(--cq-font-display), sans-serif;
   font-weight: 600;
-  font-size: var(--cq-lead);
-  line-height: 1.15;
+  font-size: clamp(1.625rem, 1.1rem + 1.7vw, 2.75rem);
+  line-height: 1.1;
   letter-spacing: 0;
 }
 
 .cq-hero-support {
-  margin-top: clamp(16px, 2.4svh, 28px);
-  max-width: 44ch;
+  margin-top: clamp(14px, 2svh, 24px);
+  max-width: 40ch;
+  font-size: var(--cq-text-lg);
+  line-height: 1.45;
 }
 
 .cq-scroll-cue {
@@ -401,79 +405,155 @@
   transition: color 200ms ease;
 }
 
-/* ---------- What is ---------- */
+/* ---------- Shared: section heads and floating cards ---------- */
 
-.cq-intro-para + .cq-intro-para {
-  margin-top: 1em;
+/* Title across the top, an optional note on the far right */
+.cq-head-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 40px;
+  margin-bottom: clamp(36px, 4.5vw, 64px);
 }
 
-/* On a phone the two intro paragraphs read as running text, not statements */
-@media (max-width: 767px) {
-  .cq-intro-para.cq-lead {
-    font-size: var(--cq-body);
-    line-height: 1.55;
+.cq-head-aside {
+  color: var(--cq-muted);
+  padding-bottom: 0.35em;
+}
+
+/* A card: one tone step above its section, lifting slightly under the pointer */
+.cq-card {
+  position: relative;
+  padding: clamp(22px, 2.4vw, 36px);
+  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+  transition:
+    transform 260ms var(--cq-ease-out),
+    background-color 260ms ease,
+    box-shadow 260ms var(--cq-ease-out);
+}
+
+.cq-name,
+.cq-panel-title,
+.cq-tile-title {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-title);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* ---------- What is ---------- */
+
+.cq-swaps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .cq-swaps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.cq-swap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+}
+
+.cq-swap-from {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-lead);
+  line-height: 1.1;
+}
+
+.cq-swap-to {
+  font-size: var(--cq-lead);
+  line-height: 1.25;
+  color: var(--cq-muted);
 }
 
 .cq-quote {
   font-family: var(--cq-font-text), sans-serif;
   font-weight: 500;
-  font-size: var(--cq-lead);
-  line-height: 1.25;
-  max-width: 26ch;
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+  line-height: 1.22;
+  max-width: 30ch;
+  text-wrap: balance;
 }
 
-.cq-motif {
+.cq-detective {
   display: block;
-  width: 100%;
   height: auto;
+  overflow: visible;
 }
 
-/* ---------- Numbers: a ledger aligned on the figures ---------- */
+.cq-detective-figure {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
 
-.cq-ledger {
+.cq-detective-ground {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+/* ---------- Numbers: four across, two rows ---------- */
+
+.cq-stats {
   display: grid;
-  row-gap: clamp(12px, 1.6vw, 20px);
-}
-
-.cq-ledger-row {
-  display: grid;
-  grid-template-columns: 3ch 0.6ch minmax(0, 1fr);
-  column-gap: 0.18em;
-  align-items: baseline;
-  font-family: var(--cq-font-display), sans-serif;
-  font-weight: 600;
-  font-size: var(--cq-head);
-  line-height: 1;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-.cq-ledger-fig {
-  text-align: right;
-  letter-spacing: -0.01em;
-}
-
-.cq-ledger-suffix {
-  color: var(--cq-accent);
-}
-
-.cq-ledger-cap {
-  font-family: var(--cq-font-text), sans-serif;
-  font-weight: 500;
-  font-size: var(--cq-body);
-  line-height: 1.3;
-  padding-left: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
 }
 
 @media (min-width: 1024px) {
-  .cq-ledger-cap {
-    font-size: var(--cq-lead);
-    padding-left: 1rem;
+  .cq-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
   }
-  .cq-sticky {
-    position: sticky;
-    top: 18vh;
-  }
+}
+
+.cq-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 10px;
+  min-height: clamp(150px, 15vw, 220px);
+}
+
+.cq-stat-fig {
+  margin: 0;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-head);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.cq-stat[data-key] .cq-stat-fig {
+  color: var(--cq-accent);
+}
+
+.cq-stat-suffix {
+  color: var(--cq-accent);
+  margin-left: 0.04em;
+}
+
+.cq-stat-label {
+  font-size: var(--cq-text-lg);
+  font-weight: 500;
+  line-height: 1.3;
+  margin-top: auto;
 }
 
 /* ---------- Flow: tiles that grow ---------- */
@@ -491,16 +571,16 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: clamp(18px, 2vw, 28px);
+  padding: clamp(22px, 2.4vw, 36px);
   background: var(--cq-tile-1);
+  transition: transform 260ms var(--cq-ease-out), box-shadow 260ms var(--cq-ease-out);
 }
 
 /* On a phone the tiles still grow in order, but stay close to their content */
-.cq-tile:nth-child(1) { min-height: 96px; background: var(--cq-tile-1); }
-.cq-tile:nth-child(2) { min-height: 116px; background: var(--cq-tile-2); }
-.cq-tile:nth-child(3) { min-height: 136px; background: var(--cq-tile-3); }
-.cq-tile:nth-child(4) { min-height: 156px; background: var(--cq-accent); color: var(--cq-accent-ink); }
+.cq-tile:nth-child(1) { min-height: 120px; background: var(--cq-tile-1); }
+.cq-tile:nth-child(2) { min-height: 140px; background: var(--cq-tile-2); }
+.cq-tile:nth-child(3) { min-height: 160px; background: var(--cq-tile-3); }
+.cq-tile:nth-child(4) { min-height: 180px; background: var(--cq-accent); color: var(--cq-accent-ink); }
 .cq-tile:nth-child(4) .cq-muted-on-tile { color: var(--cq-accent-ink); }
 .cq-muted-on-tile { color: var(--cq-ink); }
 
@@ -514,32 +594,20 @@
 }
 
 @media (min-width: 1024px) {
-  .cq-flow-stage {
-    position: relative;
-    height: clamp(520px, 66vh, 680px);
-  }
-  .cq-flow-heading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-  }
   .cq-flow {
-    position: absolute;
-    inset: 0;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: end;
+    gap: 12px;
   }
-  .cq-tile { min-height: 0; }
-  .cq-tile:nth-child(1) { grid-column: span 2; height: 34%; }
-  .cq-tile:nth-child(2) { grid-column: span 3; height: 50%; }
-  .cq-tile:nth-child(3) { grid-column: span 3; height: 72%; }
-  .cq-tile:nth-child(4) { grid-column: span 4; height: 100%; }
+  .cq-tile:nth-child(1) { min-height: 240px; }
+  .cq-tile:nth-child(2) { min-height: 290px; }
+  .cq-tile:nth-child(3) { min-height: 340px; }
+  .cq-tile:nth-child(4) { min-height: 390px; }
   .cq-flow-road {
     display: block;
     left: 0;
     right: 0;
-    bottom: 56px;
+    bottom: 40px;
     width: 100%;
     height: 8px;
     z-index: 1;
@@ -667,8 +735,9 @@
 }
 
 /* Panels: stacked without script, one at a time with it */
+/* Panels: stacked without script, one at a time with it */
 .cq-panel + .cq-panel {
-  margin-top: 72px;
+  margin-top: 24px;
 }
 
 .cq-js .cq-panel + .cq-panel {
@@ -677,6 +746,16 @@
 
 .cq-js .cq-panel:not([data-active]) {
   display: none;
+}
+
+.cq-js .cq-panel[data-active]:not([data-instant]) {
+  animation: cq-panel-in 260ms var(--cq-ease-out);
+}
+
+@media (min-width: 1024px) {
+  .cq-panel {
+    min-height: 100%;
+  }
 }
 
 .cq-panel-marker {
@@ -688,13 +767,17 @@
   color: var(--cq-accent);
 }
 
+.cq-panel-title {
+  margin-top: 14px;
+}
+
 .cq-topics {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 14px 32px;
+  gap: 8px;
 }
 
 @media (min-width: 640px) {
@@ -703,16 +786,52 @@
   }
 }
 
+.cq-topic {
+  padding: 14px 16px;
+  font-size: var(--cq-text-lg);
+  font-weight: 500;
+  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+}
+
 .cq-teams {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px clamp(24px, 3vw, 48px);
+  display: grid;
+  gap: 12px 32px;
 }
 
-/* ---------- Outcomes ---------- */
+@media (min-width: 640px) {
+  .cq-teams {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Outcomes: four across ---------- */
+
+.cq-outcomes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .cq-outcomes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .cq-outcomes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .cq-outcomes > li {
+    min-height: 300px;
+  }
+}
 
 .cq-points {
   list-style: none;
@@ -726,12 +845,33 @@
 
 /* ---------- Role ---------- */
 
+.cq-name {
+  font-size: var(--cq-head);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+/* The label and every item share one gap, so the rhythm is even */
+.cq-role-group,
+.cq-role-list {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  font-size: var(--cq-lead);
+  line-height: 1.25;
+}
+
+.cq-role-label {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .cq-role-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  gap: 12px;
 }
 
 /* ---------- Photographs ---------- */
@@ -884,6 +1024,19 @@
   .cq-strip:hover .cq-strip-track {
     animation-play-state: paused;
   }
+  /* Cards and tiles float up a little under the pointer */
+  .cq-card:hover,
+  .cq-tile:hover {
+    transform: translate3d(0, -6px, 0);
+    box-shadow: 0 22px 40px -24px rgb(0 0 0 / 0.75); /* taste-skill-ignore: lift on hover only, the requested floating feel */
+  }
+  .cq-card:hover {
+    background: color-mix(in srgb, var(--cq-ink) 8%, transparent);
+  }
+  .cq-js .cq-panel.cq-card:hover {
+    transform: none;
+    box-shadow: none; /* taste-skill-ignore: removes the hover lift on the day panel */
+  }
   .cq-nav-link:not([aria-current="true"]):hover,
   .cq-nav-home:hover {
     color: var(--cq-accent);
@@ -926,6 +1079,32 @@
   to {
     transform: scale(0.93);
     opacity: 0.35;
+  }
+}
+
+/* The detective floats gently; the patch of ground beneath him breathes with him */
+@keyframes cq-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -12px, 0); }
+}
+
+@keyframes cq-float-ground {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.88); opacity: 0.7; }
+}
+
+.cq-detective-figure {
+  animation: cq-float 6s var(--cq-ease-in-out) infinite;
+}
+
+.cq-detective-ground {
+  animation: cq-float-ground 6s var(--cq-ease-in-out) infinite;
+}
+
+@keyframes cq-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
   }
 }
 
@@ -998,6 +1177,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cq-detective-figure,
+  .cq-detective-ground,
+  .cq-js .cq-panel[data-active] {
+    animation: none;
+  }
+  .cq-card,
+  .cq-tile {
+    transition: background-color 200ms ease;
+  }
+  .cq-card:hover,
+  .cq-tile:hover {
+    transform: none;
+  }
   .cq-hero-media img,
   .cq-hero-inner,
   .cq-scroll-cue .cq-ico {
@@ -1055,4 +1247,39 @@
   .cq-strip-item {
     scroll-snap-align: start;
   }
+}
+
+/* Finale: a figure that shows the field narrowing, anchored to the bottom */
+.cq-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.cq-panel-figure {
+  margin-top: auto;
+  padding-top: clamp(28px, 4vw, 56px);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.cq-panel-figure-value {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-display);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--cq-accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.cq-panel-figure-caption {
+  font-size: var(--cq-text-lg);
+  font-weight: 500;
+}
+
+.cq-text-lg {
+  font-size: var(--cq-text-lg);
+  line-height: 1.4;
 }

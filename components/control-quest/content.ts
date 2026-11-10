@@ -17,10 +17,10 @@ export const nav = {
   menu: { icon: "Menu", text: "Menu" } as Labelled,
   close: { icon: "X", text: "Close" } as Labelled,
   items: [
-    { id: "cq-what", icon: "Search", text: "The Quest" },
+    { id: "cq-what", icon: "HatGlasses", text: "The Quest" },
     { id: "cq-numbers", icon: "ChartColumn", text: "In Numbers" },
     { id: "cq-flow", icon: "Route", text: "The Format" },
-    { id: "cq-days", icon: "CalendarDays", text: "Five Days" },
+    { id: "cq-days", icon: "CalendarRange", text: "Five Days" },
     { id: "cq-finale", icon: "Trophy", text: "Grand Finale" },
     { id: "cq-why", icon: "Target", text: "Why It Matters" },
     { id: "cq-role", icon: "UserRound", text: "My Role" },
@@ -39,30 +39,45 @@ export const hero = {
 };
 
 export const about = {
-  heading: { icon: "Search", text: "What Is Control Quest?" } as Labelled,
-  paragraphs: [
-    "Unilever Bangladesh's internal controls awareness programme. Policies and processes, taken out of the rulebook and turned into an experience.",
-    "2026 edition: a detective story. Sessions as clues, quizzes as tests, a team finale to close the case.",
-  ],
+  heading: { icon: "HatGlasses", text: "What Is Control Quest?" } as Labelled,
+  /** The programme, in two short facts. */
+  facts: [
+    {
+      icon: "ShieldCheck",
+      title: "The Programme",
+      text: "Unilever Bangladesh's internal controls awareness programme.",
+    },
+    {
+      icon: "Lightbulb",
+      title: "The Idea",
+      text: "Policies and processes, taken out of the rulebook and turned into an experience.",
+    },
+  ] as { icon: IconName; title: string; text: string }[],
+  /** The 2026 edition: a detective story, told in three swaps. */
+  edition: { icon: "Fingerprint", text: "2026 Edition: A Detective Story" } as Labelled,
+  swaps: [
+    { icon: "Presentation", from: "Sessions", to: "as clues" },
+    { icon: "ClipboardCheck", from: "Quizzes", to: "as tests" },
+    { icon: "SearchCheck", from: "A team finale", to: "to close the case" },
+  ] as { icon: IconName; from: string; to: string }[],
   quote:
     "Strong controls come to life when people understand them, challenge them and own them.",
-  /** Photo beside the intro (file in public/control-quest/photos/). */
-  photo: "01-case-clues.jpg",
+  silhouetteAlt: "Drawing of a detective in a fedora and trench coat, holding up a magnifying glass",
 };
 
-export type Stat = { value: number; suffix?: string; label: string; icon: IconName };
+export type Stat = { value: number; suffix?: string; label: string; icon: IconName; key?: boolean };
 
 export const numbers = {
   heading: { icon: "ChartColumn", text: "By The Numbers" } as Labelled,
-  note: "Corporate Office edition.",
+  note: { icon: "Building2", text: "Corporate Office edition" } as Labelled,
   stats: [
-    { value: 5, label: "Days", icon: "CalendarDays" },
-    { value: 250, suffix: "+", label: "Participants", icon: "Users" },
-    { value: 17, suffix: "+", label: "Topics", icon: "BookOpen" },
+    { value: 5, label: "Days", icon: "CalendarRange" },
+    { value: 250, suffix: "+", label: "Participants", icon: "UsersRound", key: true },
+    { value: 17, suffix: "+", label: "Topics", icon: "LibraryBig" },
     { value: 15, suffix: "+", label: "Speakers & Facilitators", icon: "Mic" },
-    { value: 10, suffix: "+", label: "Hours Of Sessions", icon: "Clock" },
-    { value: 500, suffix: "+", label: "Man-Hours Invested", icon: "Hourglass" },
-    { value: 15, label: "Finalists", icon: "Award" },
+    { value: 10, suffix: "+", label: "Hours Of Sessions", icon: "Timer" },
+    { value: 500, suffix: "+", label: "Man-Hours Invested", icon: "Hourglass", key: true },
+    { value: 15, label: "Finalists", icon: "Medal" },
     { value: 5, label: "Detective Teams", icon: "HatGlasses" },
   ] as Stat[],
 };
@@ -70,9 +85,9 @@ export const numbers = {
 export const flow = {
   heading: { icon: "Route", text: "How The Quest Worked" } as Labelled,
   steps: [
-    { icon: "GraduationCap", title: "Learn", text: "Daily sessions, 15+ speakers" },
-    { icon: "ListChecks", title: "Test", text: "Daily quizzes, scores carried all week" },
-    { icon: "Filter", title: "Qualify", text: "Top 15 to the finale" },
+    { icon: "Presentation", title: "Learn", text: "Daily sessions, 15+ speakers" },
+    { icon: "ClipboardCheck", title: "Test", text: "Daily quizzes, scores carried all week" },
+    { icon: "ListFilter", title: "Qualify", text: "Top 15 to the finale" },
     { icon: "SearchCheck", title: "Solve", text: "Teams crack the final case" },
   ] as { icon: IconName; title: string; text: string }[],
 };
@@ -86,13 +101,15 @@ export type Stop = {
   title: string;
   summary: string;
   topics?: Labelled[];
+  /** A figure that shows the field narrowing (finale only). */
+  figure?: { value: string; caption: string };
 };
 
 /** Day names and topic names are locked: word for word from the official agenda. */
 export const days = {
-  heading: { icon: "CalendarDays", text: "The Five Days" } as Labelled,
+  heading: { icon: "CalendarRange", text: "The Five Days" } as Labelled,
   pickerLabel: "Choose a day",
-  topicsLabel: { icon: "Layers", text: "Topics" } as Labelled,
+  topicsLabel: { icon: "LibraryBig", text: "Topics" } as Labelled,
   stops: [
     {
       id: "day-1",
@@ -162,8 +179,8 @@ export const days = {
 
 export const finale = {
   heading: { icon: "Trophy", text: "The Grand Finale" } as Labelled,
-  intro: "Five days of clues. One final case. Powered by Surf Excel.",
-  /** Photo that opens the finale (file in public/control-quest/photos/). */
+  intro: "Five days of clues. One final case.",
+  /** Photo beside the finale intro (file in public/control-quest/photos/). */
   photo: "02-teams-at-work.jpg",
   photoCaption: { icon: "Camera", text: "Teams at work on the case" } as Labelled,
   pickerLabel: "Choose a finale stage",
@@ -171,23 +188,26 @@ export const finale = {
     {
       id: "qualify",
       marker: "Qualify",
-      icon: "Award",
+      icon: "Medal",
       title: "The Top 15",
       summary: "Highest week-long quiz scores earn a seat",
+      figure: { value: "15", caption: "Finalists" },
     },
     {
       id: "team-up",
       marker: "Team Up",
       icon: "UsersRound",
-      title: "Five Detective Agencies",
+      title: "Five Detective Teams",
       summary: "Five teams of three, each with its own detective identity",
+      figure: { value: "5 × 3", caption: "Teams of three" },
     },
     {
       id: "round-1",
       marker: "Round 1",
-      icon: "Search",
+      icon: "FileSearch",
       title: "The Case",
       summary: "Solve a case as a team: knowledge, analysis, collaboration",
+      figure: { value: "5", caption: "Teams on the case" },
     },
     {
       id: "round-2",
@@ -195,6 +215,7 @@ export const finale = {
       icon: "BellRing",
       title: "The Buzzer",
       summary: "Top three teams, rapid fire, speed and precision",
+      figure: { value: "3", caption: "Teams on the buzzer" },
     },
     {
       id: "audience",
@@ -202,9 +223,10 @@ export const finale = {
       icon: "Users",
       title: "Everyone Plays",
       summary: "Individual prizes for the room",
+      figure: { value: "All", caption: "The whole room plays" },
     },
   ] as Stop[],
-  teamsLabel: { icon: "HatGlasses", text: "The Agencies" } as Labelled,
+  teamsLabel: { icon: "HatGlasses", text: "The Teams" } as Labelled,
   teams: [
     "Holmes Syndicate",
     "Poirot's Elite",
@@ -216,7 +238,7 @@ export const finale = {
 
 export const outcomes = {
   heading: { icon: "Target", text: "Why It Matters For The Business" } as Labelled,
-  note: { icon: "Waypoints", text: "Intended outcomes, not measured results" } as Labelled,
+  note: { icon: "Compass", text: "Intended outcomes, not measured results" } as Labelled,
   items: [
     {
       icon: "ShieldCheck",
@@ -224,17 +246,17 @@ export const outcomes = {
       points: ["Know the why", "Comply consistently", "Spot exceptions early"],
     },
     {
-      icon: "Brain",
+      icon: "BrainCircuit",
       title: "Learning That Sticks",
       points: ["A week of active recall", "Not one-off training"],
     },
     {
-      icon: "Network",
+      icon: "Handshake",
       title: "Cross-Functional Connection",
       points: ["Knowledge shared across every team"],
     },
     {
-      icon: "Waypoints",
+      icon: "MapPinned",
       title: "A Model That Travels",
       points: ["Next stop: every cluster across Unilever Bangladesh"],
     },
@@ -246,7 +268,7 @@ export const role = {
   name: "Ishraq Nasim",
   line: {
     icon: "Briefcase",
-    text: "Organising team · Financial Controller's team, Unilever Bangladesh",
+    text: "ULIP Intern, Finance Controller's Team, Unilever Bangladesh Limited",
   } as Labelled,
   groups: [
     {
