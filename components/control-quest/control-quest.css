@@ -501,7 +501,7 @@
 .cq-noir-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(closest-side at 55% 44%, #eef6ee 0, #b7d3c2 34%, #3b6d50 64%, rgb(10 29 19 / 0) 100%); /* taste-skill-ignore: backlight */
+  background: radial-gradient(closest-side at 55% 44%, #e6f7dc 0, #a7d4ad 34%, #346a49 64%, rgb(10 29 19 / 0) 100%); /* taste-skill-ignore: backlight */
   animation: cq-breathe 8s var(--cq-ease-in-out) infinite;
 }
 

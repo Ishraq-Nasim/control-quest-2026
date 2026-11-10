@@ -2,7 +2,8 @@ import Image from "next/image";
 import detective from "@/public/control-quest/detective.webp";
 
 /**
- * The watercolor detective (supplied by the site owner), with the white paper
+ * The watercolor detective (supplied by the site owner), recoloured into the
+ * site greens, with the white paper
  * removed so it floats on the page. A pale light behind him makes the dark
  * figure read as a silhouette and fades into the section green at the edges.
  */
