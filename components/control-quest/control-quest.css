@@ -139,7 +139,6 @@
 
 .cq-name,
 .cq-panel-title,
-.cq-tile-title,
 .cq-swap-from,
 .cq-role-label {
   color: var(--cq-heading);
@@ -535,8 +534,7 @@
 }
 
 .cq-name,
-.cq-panel-title,
-.cq-tile-title {
+.cq-panel-title {
   font-family: var(--cq-font-display), sans-serif;
   font-weight: 700;
   font-size: var(--cq-title);
@@ -1473,12 +1471,13 @@
   border-radius: 8px;
 }
 
+/* Solve, the finish: Forest card, white text, Signal Green figure and icon */
 .cq-stop[data-last] .cq-stop-card {
-  background: var(--cq-signal);
-  border-color: var(--cq-signal);
-  color: var(--cq-forest);
-  --cq-heading: var(--cq-forest);
-  --cq-accent: var(--cq-forest);
+  background: var(--cq-forest);
+  border-color: var(--cq-forest);
+  color: var(--cq-white);
+  --cq-heading: var(--cq-white);
+  --cq-accent: var(--cq-signal);
 }
 
 .cq-stop-fig {
