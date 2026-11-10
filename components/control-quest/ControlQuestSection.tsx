@@ -12,8 +12,11 @@ import { findPhoto, listPhotos, type Photo } from "./photos";
 import { RoadLine } from "./Road";
 import { Root } from "./Root";
 import { RouteStops } from "./RouteStops";
+import { ICON_STROKE, icons } from "./icons";
 import bg from "@/public/control-quest/bg.webp";
 import logo from "@/public/control-quest/logo.webp";
+
+const QuoteMark = icons.Quote;
 
 /** Stagger index for an entrance part: heading 0, text 1, visual 2… */
 const at = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -133,11 +136,14 @@ function WhatIs() {
               </ul>
             </div>
 
-            <blockquote className="cq-quote cq-rv mt-6 lg:mt-10" style={at(4)}>
-              <p>{about.quote}</p>
-            </blockquote>
           </div>
         </div>
+
+        {/* The section closes on its statement, centred, in Road Green */}
+        <blockquote className="cq-statement cq-rv" style={at(4)}>
+          <QuoteMark aria-hidden="true" strokeWidth={ICON_STROKE} className="cq-statement-mark" />
+          <p>{about.quote}</p>
+        </blockquote>
       </div>
     </section>
   );

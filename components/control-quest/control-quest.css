@@ -1418,3 +1418,27 @@
     transition: color 250ms ease;
   }
 }
+
+/* The section's closing statement: centred, in the accent green, the brand's
+   quote style (Barlow italic). Road Green on white, Signal Green on Forest. */
+.cq-statement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 40ch;
+  margin: clamp(56px, 7vw, 104px) auto 0;
+  text-align: center;
+  color: var(--cq-accent);
+  font-family: var(--cq-font-text), sans-serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2.25rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.cq-statement-mark {
+  width: 1.1em;
+  height: 1.1em;
+}
