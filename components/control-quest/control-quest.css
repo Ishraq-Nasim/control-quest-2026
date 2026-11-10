@@ -592,46 +592,6 @@
   text-wrap: balance;
 }
 
-/* The detective: the watercolor floats on a pale backlight that fades into the
-   section green. The radial light is the requested noir look (taste-skill-ignore). */
-.cq-noir {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  isolation: isolate;
-}
-
-.cq-noir-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(closest-side at 55% 44%, #ffffff 0, #e9f5ec 42%, rgb(233 245 236 / 0) 100%); /* taste-skill-ignore: backlight */
-  animation: cq-breathe 8s var(--cq-ease-in-out) infinite;
-}
-
-.cq-noir-figure {
-  position: relative;
-  animation: cq-float 7s var(--cq-ease-in-out) infinite;
-}
-
-.cq-noir-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  /* the painting fades out before its square edge (taste-skill-ignore: soft edge mask) */
-  -webkit-mask-image: radial-gradient(farthest-side at 50% 46%, #000 72%, transparent 100%); /* taste-skill-ignore: soft edge */
-  mask-image: radial-gradient(farthest-side at 50% 46%, #000 72%, transparent 100%); /* taste-skill-ignore: soft edge */
-}
-
-@keyframes cq-float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -10px, 0); }
-}
-
-@keyframes cq-breathe {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(0.97); }
-}
-
-
 /* ---------- Numbers: four across, two rows ---------- */
 
 .cq-stats {
@@ -1285,8 +1245,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cq-noir-glow,
-  .cq-noir-figure,
   .cq-js .cq-panel[data-active] {
     animation: none;
   }
@@ -1441,4 +1399,54 @@
 .cq-statement-mark {
   width: 1.1em;
   height: 1.1em;
+}
+
+/* ---------- The case trail: the artwork appears one stop at a time ---------- */
+.cq-trail {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.cq-trail-step {
+  position: absolute;
+}
+
+/* Hiding is instant; only the way in is staggered, one stop after another */
+.cq-js [data-reveal][data-in] .cq-trail-step {
+  transition:
+    opacity 450ms var(--cq-ease-out),
+    transform 450ms var(--cq-ease-out);
+  transition-delay: calc(var(--step) * 450ms + 200ms);
+}
+
+/* Before the section is seen, every stop waits small and clear */
+.cq-js [data-reveal]:not([data-in]) .cq-trail-step {
+  opacity: 0;
+  transform: scale(0.82);
+}
+
+/* After the sequence, each stop floats on its own rhythm */
+.cq-trail-float {
+  position: absolute;
+  inset: 0;
+  animation: cq-float 6s var(--cq-ease-in-out) infinite;
+  animation-delay: calc(var(--step) * -0.9s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cq-js [data-reveal][data-in] .cq-trail-step {
+    transition: none;
+  }
+  .cq-js [data-reveal]:not([data-in]) .cq-trail-step {
+    opacity: 1;
+    transform: none;
+  }
+  .cq-trail-float {
+    animation: none;
+  }
+}
+
+@keyframes cq-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -10px, 0); }
 }

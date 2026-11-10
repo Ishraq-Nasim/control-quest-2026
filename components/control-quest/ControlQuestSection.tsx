@@ -2,7 +2,7 @@ import Image from "next/image";
 import "./control-quest.css";
 import { about, days, finale, flow, hero, nav, numbers, outcomes, role, type Labelled } from "./content";
 import { CountUp } from "./CountUp";
-import { Detective } from "./Detective";
+import { CaseTrail } from "./CaseTrail";
 import { FinishLine } from "./FinishLine";
 import { display, text } from "./fonts";
 import { Gallery } from "./Gallery";
@@ -98,11 +98,11 @@ function WhatIs() {
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-what-title" heading={about.heading} />
         <div className="cq-grid gap-y-10">
-          <div className="cq-rv order-last flex justify-center lg:order-none lg:col-span-4 lg:items-start" style={at(3)}>
-            <Detective label={about.silhouetteAlt} className="w-full max-w-[420px] lg:max-w-none" />
+          <div className="order-last flex justify-center lg:order-none lg:col-span-5 lg:items-start">
+            <CaseTrail label={about.silhouetteAlt} className="w-full max-w-[560px] lg:max-w-none" />
           </div>
 
-          <div className="grid gap-4 lg:col-span-8">
+          <div className="grid gap-4 lg:col-span-7">
             <div className="grid gap-4 md:grid-cols-2">
               {about.facts.map((f, i) => (
                 <div key={f.title} className="cq-card cq-rv" style={at(i + 1)}>
