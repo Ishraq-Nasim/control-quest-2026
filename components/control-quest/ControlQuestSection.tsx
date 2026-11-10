@@ -26,9 +26,9 @@ function Hero() {
       </div>
       <div className="cq-hero-scrim" aria-hidden="true" />
       <div className="cq-hero-inner cq-wrap">
-        {/* The logo sits on a solid Forest panel with clear space (brand guideline p. 15-16) */}
+        {/* The logo floats freely over the hero background */}
         <div className="cq-hero-badge cq-hero-in" style={at(0)}>
-          <Image src={logo} alt={hero.logoAlt} className="cq-hero-logo" sizes="(min-width: 1024px) 340px, 240px" priority />
+          <Image src={logo} alt={hero.logoAlt} className="cq-hero-logo cq-logo-float" sizes="(min-width: 1024px) 340px, 240px" priority />
         </div>
         <h1 className="cq-h1 cq-hero-title cq-hero-in" style={at(1)}>
           {hero.title}
@@ -45,7 +45,6 @@ function Hero() {
       <a href="#cq-what" className="cq-scroll-cue">
         <Label icon={hero.scrollCue.icon}>{hero.scrollCue.text}</Label>
       </a>
-      <FinishLine id="hero" />
     </header>
   );
 }

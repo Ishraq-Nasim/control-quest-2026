@@ -420,9 +420,7 @@
 }
 
 .cq-hero-badge {
-  background: var(--cq-forest);
-  padding: clamp(26px, 3vw, 42px);
-  border-radius: 8px;
+  display: block;
 }
 
 .cq-hero-logo {
@@ -454,7 +452,7 @@
 .cq-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: calc(clamp(20px, 4svh, 40px) + 24px);
+  bottom: clamp(20px, 4svh, 40px);
   translate: -50% 0;
   display: inline-flex;
   min-height: 44px;
@@ -1363,9 +1361,14 @@
   height: 24px;
 }
 
-.cq-hero .cq-finish {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+
+/* The hero logo floats gently over the background */
+.cq-logo-float {
+  animation: cq-float 7s var(--cq-ease-in-out) 0.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cq-logo-float {
+    animation: none;
+  }
 }
