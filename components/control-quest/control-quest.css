@@ -1805,3 +1805,9 @@
     animation: none;
   }
 }
+
+/* A stage without a figure: its dot picture takes the figure's place at the bottom */
+.cq-panel > .cq-field:last-child {
+  margin-top: auto;
+  padding-top: clamp(28px, 4vw, 56px);
+}

@@ -229,7 +229,6 @@ export const finale = {
       icon: "Users",
       title: "Everyone Plays",
       summary: "Individual prizes for the room",
-      figure: { value: "All", caption: "The whole room plays" },
       field: "room",
     },
   ] as Stop[],
