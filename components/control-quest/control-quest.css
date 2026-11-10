@@ -1,21 +1,66 @@
 /* Control Quest 2026: section styles. Every value comes from these tokens. */
 
+/* Brand palette (Control Quest Brand Guideline v1.0, section 04) */
 .cq {
-  /* Palette: taken from the supplied background and logo */
-  --cq-ground: #06140d;
-  --cq-field-1: #0a1d13;
-  --cq-field-2: #0d2418;
-  --cq-field-3: #08180f;
-  --cq-field-4: #11301f;
-  --cq-tile-1: #153a25;
-  --cq-tile-2: #1b4a2f;
-  --cq-tile-3: #22583a;
-  --cq-surface: #163a26;
-  --cq-ink: #eef3ea;
-  --cq-muted: #a9c0ae;
-  --cq-faint: #4f7a5e;
-  --cq-accent: #a3e635;
-  --cq-accent-ink: #0b2416;
+  --cq-forest: #0b3d24;
+  --cq-road: #167a3a;
+  --cq-signal: #3dbe4b;
+  --cq-mint: #e9f5ec;
+  --cq-white: #ffffff;
+  --cq-ink-dark: #10231a;
+  --cq-slate: #56655d;
+  --cq-card-border: #6db585;
+}
+
+/* Section themes. Text pairs are the guideline's approved pairs (p. 26). */
+.cq,
+.cq-theme-forest {
+  --cq-bg: var(--cq-forest);
+  --cq-ink: var(--cq-white);
+  --cq-heading: var(--cq-white);
+  --cq-muted: var(--cq-mint);
+  --cq-accent: var(--cq-signal);
+  --cq-accent-ink: var(--cq-forest);
+  --cq-card: rgb(255 255 255 / 0.07);
+  --cq-card-hover: rgb(255 255 255 / 0.11);
+  --cq-card-line: rgb(61 190 75 / 0.5);
+  --cq-inner: rgb(255 255 255 / 0.07);
+  --cq-surface: rgb(255 255 255 / 0.1);
+  --cq-faint: rgb(233 245 236 / 0.4);
+}
+
+.cq-theme-white,
+.cq-theme-mint {
+  --cq-bg: var(--cq-white);
+  --cq-ink: var(--cq-ink-dark);
+  --cq-heading: var(--cq-forest);
+  --cq-muted: var(--cq-slate);
+  --cq-accent: var(--cq-road);
+  --cq-accent-ink: var(--cq-white);
+  --cq-card: var(--cq-mint);
+  --cq-card-hover: var(--cq-mint);
+  --cq-card-line: var(--cq-card-border);
+  --cq-inner: var(--cq-white);
+  --cq-surface: var(--cq-mint);
+  --cq-faint: var(--cq-card-border);
+}
+
+.cq-theme-mint {
+  --cq-bg: var(--cq-mint);
+  --cq-card: var(--cq-white);
+  --cq-card-hover: var(--cq-white);
+  --cq-inner: var(--cq-mint);
+  --cq-surface: var(--cq-white);
+}
+
+.cq-theme-forest,
+.cq-theme-white,
+.cq-theme-mint {
+  background: var(--cq-bg);
+  color: var(--cq-ink);
+}
+
+.cq {
 
   /* Type: five steps */
   --cq-small: 0.875rem;
@@ -35,7 +80,7 @@
   --cq-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --cq-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  background: var(--cq-ground);
+  background: var(--cq-forest);
   color: var(--cq-ink);
   font-family: var(--cq-font-text), system-ui, sans-serif;
   font-size: var(--cq-body);
@@ -89,6 +134,15 @@
   font-family: var(--cq-font-display), "Arial Narrow", sans-serif;
   font-weight: 700;
   text-wrap: balance;
+  color: var(--cq-heading);
+}
+
+.cq-name,
+.cq-panel-title,
+.cq-tile-title,
+.cq-swap-from,
+.cq-role-label {
+  color: var(--cq-heading);
 }
 
 .cq-h1 {
@@ -168,7 +222,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--cq-ground);
+  background: var(--cq-forest);
 }
 
 .cq-nav-inner {
@@ -254,7 +308,7 @@
   left: 0;
   right: 0;
   top: 100%;
-  background: var(--cq-field-1);
+  background: var(--cq-forest);
   padding-block: 8px 24px;
   max-height: calc(100svh - var(--cq-nav-h));
   overflow-y: auto;
@@ -325,7 +379,7 @@
   display: flex;
   overflow: hidden;
   isolation: isolate;
-  background: var(--cq-ground);
+  background: var(--cq-forest);
   view-timeline-name: --cq-hero;
 }
 
@@ -365,8 +419,15 @@
   transform-origin: 50% 30%;
 }
 
+.cq-hero-badge {
+  background: var(--cq-forest);
+  padding: clamp(26px, 3vw, 42px);
+  border-radius: 8px;
+}
+
 .cq-hero-logo {
-  width: clamp(210px, 22vw, 340px);
+  display: block;
+  width: clamp(240px, 22vw, 340px);
   height: auto;
 }
 
@@ -393,7 +454,7 @@
 .cq-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: clamp(20px, 4svh, 40px);
+  bottom: calc(clamp(20px, 4svh, 40px) + 24px);
   translate: -50% 0;
   display: inline-flex;
   min-height: 44px;
@@ -426,11 +487,13 @@
 .cq-card {
   position: relative;
   padding: clamp(22px, 2.4vw, 36px);
-  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+  background: var(--cq-card);
+  border: 1px solid var(--cq-card-line); /* taste-skill-ignore: brand card border */
+  border-radius: 8px;
   transition:
     transform 260ms var(--cq-ease-out),
     background-color 260ms ease,
-    box-shadow 260ms var(--cq-ease-out);
+    border-color 260ms ease;
 }
 
 .cq-name,
@@ -465,7 +528,8 @@
   flex-direction: column;
   gap: 4px;
   padding: 18px 20px;
-  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+  background: var(--cq-inner);
+  border-radius: 8px;
 }
 
 .cq-swap-from {
@@ -501,7 +565,7 @@
 .cq-noir-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(closest-side at 55% 44%, #e6f7dc 0, #a7d4ad 34%, #346a49 64%, rgb(10 29 19 / 0) 100%); /* taste-skill-ignore: backlight */
+  background: radial-gradient(closest-side at 55% 44%, #ffffff 0, #e9f5ec 42%, rgb(233 245 236 / 0) 100%); /* taste-skill-ignore: backlight */
   animation: cq-breathe 8s var(--cq-ease-in-out) infinite;
 }
 
@@ -596,17 +660,16 @@
   display: flex;
   flex-direction: column;
   padding: clamp(22px, 2.4vw, 36px);
-  background: var(--cq-tile-1);
-  transition: transform 260ms var(--cq-ease-out), box-shadow 260ms var(--cq-ease-out);
+  border-radius: 8px;
+  transition: transform 260ms var(--cq-ease-out);
 }
 
 /* On a phone the tiles still grow in order, but stay close to their content */
-.cq-tile:nth-child(1) { min-height: 120px; background: var(--cq-tile-1); }
-.cq-tile:nth-child(2) { min-height: 140px; background: var(--cq-tile-2); }
-.cq-tile:nth-child(3) { min-height: 160px; background: var(--cq-tile-3); }
-.cq-tile:nth-child(4) { min-height: 180px; background: var(--cq-accent); color: var(--cq-accent-ink); }
-.cq-tile:nth-child(4) .cq-muted-on-tile { color: var(--cq-accent-ink); }
-.cq-muted-on-tile { color: var(--cq-ink); }
+.cq-tile:nth-child(1) { min-height: 120px; background: var(--cq-white); color: var(--cq-ink-dark); --cq-heading: var(--cq-forest); }
+.cq-tile:nth-child(2) { min-height: 140px; background: var(--cq-card-border); color: var(--cq-ink-dark); --cq-heading: var(--cq-ink-dark); }
+.cq-tile:nth-child(3) { min-height: 160px; background: var(--cq-road); color: var(--cq-white); --cq-heading: var(--cq-white); }
+.cq-tile:nth-child(4) { min-height: 180px; background: var(--cq-signal); color: var(--cq-forest); --cq-heading: var(--cq-forest); }
+.cq-muted-on-tile { color: inherit; }
 
 .cq-road {
   position: absolute;
@@ -658,6 +721,7 @@
   min-height: 48px;
   padding: 10px 16px;
   border: 0;
+  border-radius: 8px;
   background: var(--cq-surface);
   color: var(--cq-ink);
   font: inherit;
@@ -814,7 +878,8 @@
   padding: 14px 16px;
   font-size: var(--cq-text-lg);
   font-weight: 500;
-  background: color-mix(in srgb, var(--cq-ink) 5%, transparent);
+  background: var(--cq-inner);
+  border-radius: 8px;
 }
 
 .cq-teams {
@@ -984,7 +1049,7 @@
 }
 
 .cq-lightbox::backdrop {
-  background: rgb(3 10 6 / 0.92);
+  background: rgb(11 61 36 / 0.95);
 }
 
 .cq-lightbox[open] {
@@ -1018,6 +1083,7 @@
   min-height: 48px;
   padding: 0 14px;
   border: 0;
+  border-radius: 8px;
   background: var(--cq-surface);
   color: var(--cq-ink);
   font: inherit;
@@ -1051,22 +1117,21 @@
   /* Cards and tiles float up a little under the pointer */
   .cq-card:hover,
   .cq-tile:hover {
-    transform: translate3d(0, -6px, 0);
-    box-shadow: 0 22px 40px -24px rgb(0 0 0 / 0.75); /* taste-skill-ignore: lift on hover only, the requested floating feel */
+    transform: translate3d(0, -4px, 0);
   }
   .cq-card:hover {
-    background: color-mix(in srgb, var(--cq-ink) 8%, transparent);
+    background: var(--cq-card-hover);
+    border-color: var(--cq-accent);
   }
   .cq-js .cq-panel.cq-card:hover {
     transform: none;
-    box-shadow: none; /* taste-skill-ignore: removes the hover lift on the day panel */
   }
   .cq-nav-link:not([aria-current="true"]):hover,
   .cq-nav-home:hover {
     color: var(--cq-accent);
   }
   .cq-btn:hover {
-    background: var(--cq-tile-3);
+    background: var(--cq-card-hover);
   }
 }
 
@@ -1075,21 +1140,21 @@
 /* Entrances: heading, then text, then visual. Only hidden once script runs. */
 .cq-rv {
   transition:
-    opacity 800ms var(--cq-ease-out),
-    transform 800ms var(--cq-ease-out);
-  transition-delay: calc(var(--i, 0) * 80ms);
+    opacity 400ms var(--cq-ease-out),
+    transform 400ms var(--cq-ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
 }
 
 .cq-js [data-reveal]:not([data-in]) .cq-rv {
   opacity: 0;
-  transform: translate3d(0, 28px, 0);
+  transform: translate3d(-24px, 0, 0);
 }
 
 /* Hero: content rises on load; the picture settles slowly, once */
 @keyframes cq-rise {
   from {
     opacity: 0;
-    transform: translate3d(0, 20px, 0);
+    transform: translate3d(-20px, 0, 0);
   }
 }
 
@@ -1109,7 +1174,7 @@
 @keyframes cq-panel-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 10px, 0);
+    transform: translate3d(-12px, 0, 0);
   }
 }
 
@@ -1130,8 +1195,8 @@
 }
 
 .cq-hero-in {
-  animation: cq-rise 900ms var(--cq-ease-out) both;
-  animation-delay: calc(var(--i, 0) * 90ms + 100ms);
+  animation: cq-rise 400ms var(--cq-ease-out) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 100ms);
 }
 
 .cq-scroll-cue .cq-ico {
@@ -1287,4 +1352,20 @@
 .cq-text-lg {
   font-size: var(--cq-text-lg);
   line-height: 1.4;
+}
+
+/* ---------- The finish-line band (guideline p. 36) ----------
+   Equal squares starting top-left with Forest, two rows, full bleed,
+   bottom edge only. Never carries text. */
+.cq-finish {
+  display: block;
+  width: 100%;
+  height: 24px;
+}
+
+.cq-hero .cq-finish {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 html {
-  background: #06140d;
+  background: #0b3d24;
   color-scheme: dark;
-  scrollbar-color: #2f5e40 #06140d;
+  scrollbar-color: #3dbe4b #0b3d24;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
   margin: 0;
-  background: #06140d;
+  background: #0b3d24;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -9,7 +9,7 @@ export function Gallery() {
   if (photos.length === 0) return null;
 
   return (
-    <section id="cq-gallery" aria-labelledby="cq-gallery-title" className="cq-section" style={{ background: "var(--cq-field-1)" }}>
+    <section id="cq-gallery" aria-labelledby="cq-gallery-title" className="cq-section cq-theme-forest">
       <div data-reveal>
         <Filmstrip
           photos={photos}

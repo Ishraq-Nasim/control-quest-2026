@@ -3,6 +3,7 @@ import "./control-quest.css";
 import { about, days, finale, flow, hero, nav, numbers, outcomes, role, type Labelled } from "./content";
 import { CountUp } from "./CountUp";
 import { Detective } from "./Detective";
+import { FinishLine } from "./FinishLine";
 import { display, text } from "./fonts";
 import { Gallery } from "./Gallery";
 import { Label } from "./Label";
@@ -16,7 +17,6 @@ import logo from "@/public/control-quest/logo.webp";
 
 /** Stagger index for an entrance part: heading 0, text 1, visual 2… */
 const at = (i: number) => ({ "--i": i }) as React.CSSProperties;
-const field = (v: string) => ({ background: `var(${v})` }) as React.CSSProperties;
 
 function Hero() {
   return (
@@ -26,14 +26,10 @@ function Hero() {
       </div>
       <div className="cq-hero-scrim" aria-hidden="true" />
       <div className="cq-hero-inner cq-wrap">
-        <Image
-          src={logo}
-          alt={hero.logoAlt}
-          className="cq-hero-logo cq-hero-in"
-          style={at(0)}
-          sizes="(min-width: 1024px) 340px, 220px"
-          priority
-        />
+        {/* The logo sits on a solid Forest panel with clear space (brand guideline p. 15-16) */}
+        <div className="cq-hero-badge cq-hero-in" style={at(0)}>
+          <Image src={logo} alt={hero.logoAlt} className="cq-hero-logo" sizes="(min-width: 1024px) 340px, 240px" priority />
+        </div>
         <h1 className="cq-h1 cq-hero-title cq-hero-in" style={at(1)}>
           {hero.title}
         </h1>
@@ -49,6 +45,7 @@ function Hero() {
       <a href="#cq-what" className="cq-scroll-cue">
         <Label icon={hero.scrollCue.icon}>{hero.scrollCue.text}</Label>
       </a>
+      <FinishLine id="hero" />
     </header>
   );
 }
@@ -95,7 +92,7 @@ function DriftPhoto({
 
 function WhatIs() {
   return (
-    <section id="cq-what" aria-labelledby="cq-what-title" className="cq-section" style={field("--cq-field-1")}>
+    <section id="cq-what" aria-labelledby="cq-what-title" className="cq-section cq-theme-white">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-what-title" heading={about.heading} />
         <div className="cq-grid gap-y-10">
@@ -149,7 +146,7 @@ function WhatIs() {
 
 function Numbers() {
   return (
-    <section id="cq-numbers" aria-labelledby="cq-numbers-title" className="cq-section" style={field("--cq-field-2")}>
+    <section id="cq-numbers" aria-labelledby="cq-numbers-title" className="cq-section cq-theme-forest">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-numbers-title" heading={numbers.heading} aside={numbers.note} />
         <dl className="cq-stats">
@@ -178,7 +175,7 @@ function Numbers() {
 
 function Flow() {
   return (
-    <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section" style={field("--cq-field-3")}>
+    <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section cq-theme-mint">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-flow-title" heading={flow.heading} />
         <ol className="cq-flow">
@@ -199,7 +196,7 @@ function Flow() {
 
 function FiveDays() {
   return (
-    <section id="cq-days" aria-labelledby="cq-days-title" className="cq-section" style={field("--cq-field-1")}>
+    <section id="cq-days" aria-labelledby="cq-days-title" className="cq-section cq-theme-white">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-days-title" heading={days.heading} />
         <div className="cq-rv" style={at(1)}>
@@ -218,7 +215,7 @@ function FiveDays() {
 function Finale() {
   const photo = findPhoto(finale.photo);
   return (
-    <section id="cq-finale" aria-labelledby="cq-finale-title" className="cq-section" style={field("--cq-field-2")}>
+    <section id="cq-finale" aria-labelledby="cq-finale-title" className="cq-section cq-theme-forest">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-finale-title" heading={finale.heading} />
         <div className="cq-grid gap-y-10">
@@ -260,7 +257,7 @@ function Finale() {
 
 function Outcomes() {
   return (
-    <section id="cq-why" aria-labelledby="cq-why-title" className="cq-section" style={field("--cq-field-4")}>
+    <section id="cq-why" aria-labelledby="cq-why-title" className="cq-section cq-theme-mint">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-why-title" heading={outcomes.heading} aside={outcomes.note} />
         <ul className="cq-outcomes">
@@ -286,7 +283,7 @@ function Outcomes() {
 
 function Role() {
   return (
-    <section id="cq-role" aria-labelledby="cq-role-title" className="cq-section" style={field("--cq-field-3")}>
+    <section id="cq-role" aria-labelledby="cq-role-title" className="cq-section cq-theme-white">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-role-title" heading={role.heading} />
         <div className="cq-grid gap-y-8">
@@ -344,6 +341,7 @@ export default function ControlQuestSection() {
       <Outcomes />
       <Role />
       <Gallery />
+      <FinishLine id="end" />
     </Root>
   );
 }
