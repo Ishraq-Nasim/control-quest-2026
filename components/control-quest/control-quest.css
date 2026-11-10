@@ -464,12 +464,13 @@
 
 .cq-hero-logo {
   display: block;
-  width: clamp(240px, 22vw, 340px);
+  width: min(540px, max(min(88vw, 380px), 36vw));
   height: auto;
 }
 
 .cq-hero-title {
-  margin-top: clamp(16px, 2.4svh, 28px);
+  margin-top: clamp(12px, 2svh, 24px);
+  font-size: var(--cq-head);
 }
 
 .cq-hero-sub {

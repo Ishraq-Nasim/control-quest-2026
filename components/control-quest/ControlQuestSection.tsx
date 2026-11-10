@@ -28,7 +28,7 @@ function Hero() {
       <div className="cq-hero-inner cq-wrap">
         {/* The logo floats freely over the hero background */}
         <div className="cq-hero-badge cq-hero-in" style={at(0)}>
-          <Image src={logo} alt={hero.logoAlt} className="cq-hero-logo cq-logo-float" sizes="(min-width: 1024px) 340px, 240px" priority />
+          <Image src={logo} alt={hero.logoAlt} className="cq-hero-logo cq-logo-float" sizes="(min-width: 1024px) 540px, 300px" priority />
         </div>
         <h1 className="cq-h1 cq-hero-title cq-hero-in" style={at(1)}>
           {hero.title}
