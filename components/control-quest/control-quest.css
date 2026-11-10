@@ -490,21 +490,73 @@
   text-wrap: balance;
 }
 
-.cq-detective {
-  display: block;
+/* The detective scene: a backlit figure in drifting mist.
+   Gradients and the glow are the requested noir look (taste-skill-ignore). */
+.cq-noir {
+  position: relative;
+  aspect-ratio: 5 / 6;
+  overflow: hidden;
+  isolation: isolate;
+  background: #030a06;
+}
+
+.cq-noir-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 76% 40%, rgb(214 255 178 / 0.55) 0, rgb(120 200 130 / 0.32) 12%, transparent 34%), /* taste-skill-ignore: backlight */
+    radial-gradient(ellipse at 62% 42%, rgb(70 150 100 / 0.55) 0, rgb(25 70 45 / 0.45) 32%, transparent 70%); /* taste-skill-ignore: backlight */
+}
+
+/* Mist: fractal noise drawn once, then slid sideways (cheap to move) */
+.cq-noir-fog {
+  position: absolute;
+  top: -10%;
+  bottom: -10%;
+  left: 0;
+  width: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.011' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.95 0 0 0 0 0.82 0 0 0 1.1 -0.42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  background-size: 640px 640px;
+  background-repeat: repeat;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 62% 45%, #000 20%, transparent 80%); /* taste-skill-ignore: fades the mist at the edges */
+  mask-image: radial-gradient(ellipse 70% 60% at 62% 45%, #000 20%, transparent 80%); /* taste-skill-ignore: fades the mist at the edges */
+  pointer-events: none;
+}
+
+.cq-noir-fog--back {
+  opacity: 0.75;
+  animation: cq-mist 70s linear infinite;
+}
+
+.cq-noir-fog--front {
+  opacity: 0.28;
+  background-size: 900px 900px;
+  animation: cq-mist 45s linear infinite reverse;
+}
+
+.cq-noir-figure {
+  position: absolute;
+  inset: auto 0 0 -6%;
+  width: 106%;
   height: auto;
-  overflow: visible;
+  display: block;
 }
 
-.cq-detective-figure {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
+.cq-noir-lens {
+  animation: cq-lens 5s var(--cq-ease-in-out) infinite;
 }
 
-.cq-detective-ground {
-  transform-box: fill-box;
-  transform-origin: 50% 50%;
+@keyframes cq-mist {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
+
+@keyframes cq-lens {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.78; }
+}
+
 
 /* ---------- Numbers: four across, two rows ---------- */
 
@@ -1082,25 +1134,6 @@
   }
 }
 
-/* The detective floats gently; the patch of ground beneath him breathes with him */
-@keyframes cq-float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -12px, 0); }
-}
-
-@keyframes cq-float-ground {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(0.88); opacity: 0.7; }
-}
-
-.cq-detective-figure {
-  animation: cq-float 6s var(--cq-ease-in-out) infinite;
-}
-
-.cq-detective-ground {
-  animation: cq-float-ground 6s var(--cq-ease-in-out) infinite;
-}
-
 @keyframes cq-panel-in {
   from {
     opacity: 0;
@@ -1177,8 +1210,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cq-detective-figure,
-  .cq-detective-ground,
+  .cq-noir-fog,
+  .cq-noir-lens,
   .cq-js .cq-panel[data-active] {
     animation: none;
   }

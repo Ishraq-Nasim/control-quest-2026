@@ -62,7 +62,7 @@ export const about = {
   ] as { icon: IconName; from: string; to: string }[],
   quote:
     "Strong controls come to life when people understand them, challenge them and own them.",
-  silhouetteAlt: "Drawing of a detective in a fedora and trench coat, holding up a magnifying glass",
+  silhouetteAlt: "Drawing of a detective in silhouette, wearing a fedora and studying a glowing magnifying glass in drifting mist",
 };
 
 export type Stat = { value: number; suffix?: string; label: string; icon: IconName; key?: boolean };

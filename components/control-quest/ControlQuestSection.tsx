@@ -99,8 +99,8 @@ function WhatIs() {
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-what-title" heading={about.heading} />
         <div className="cq-grid gap-y-10">
-          <div className="cq-rv order-last flex justify-center lg:order-none lg:col-span-4 lg:items-end" style={at(3)}>
-            <Detective label={about.silhouetteAlt} className="w-[min(100%,300px)] lg:w-full lg:max-w-[360px]" />
+          <div className="cq-rv order-last flex justify-center lg:order-none lg:col-span-4 lg:items-start" style={at(3)}>
+            <Detective label={about.silhouetteAlt} className="w-full max-w-[420px] lg:max-w-none" />
           </div>
 
           <div className="grid gap-4 lg:col-span-8">
