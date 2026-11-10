@@ -262,7 +262,7 @@ function Finale() {
                   {finale.teamsLabel.text}
                 </Label>
               </h3>
-              <ul className="cq-teams cq-text-lg mt-5">
+              <ul className="cq-teams cq-lead mt-5">
                 {finale.teams.map((t) => (
                   <li key={t}>
                     <Label icon="HatGlasses">{t}</Label>
@@ -273,7 +273,7 @@ function Finale() {
           </div>
         </div>
         <div className="cq-rv mt-16 lg:mt-24" style={at(4)}>
-          <RouteStops idPrefix="cq-finale" stops={finale.stops} pickerLabel={finale.pickerLabel} />
+          <RouteStops idPrefix="cq-finale" stops={finale.stops} pickerLabel={finale.pickerLabel} teams={finale.teams} />
         </div>
       </div>
     </section>

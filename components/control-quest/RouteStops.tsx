@@ -4,12 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import type { Labelled, Stop } from "./content";
 import { Label } from "./Label";
 import { RoadLine } from "./Road";
+import { FieldDots } from "./FieldDots";
 
 type Props = {
   idPrefix: string;
   stops: Stop[];
   pickerLabel: string;
   topicsLabel?: Labelled;
+  /** Team names, for the finale's dot picture */
+  teams?: string[];
 };
 
 /**
@@ -18,7 +21,7 @@ type Props = {
  * automatic activation, arrow keys, Home and End). Switching is instant:
  * it is keyboard-driven and repeated, so it does not animate.
  */
-export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel }: Props) {
+export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel, teams = [] }: Props) {
   const [active, setActive] = useState(0);
   const [enhanced, setEnhanced] = useState(false);
   // Keyboard switching is instant; a click gets a short fade-in.
@@ -110,6 +113,7 @@ export function RouteStops({ idPrefix, stops, pickerLabel, topicsLabel }: Props)
               <Label icon={s.icon}>{s.title}</Label>
             </h3>
             <p className="cq-lead mt-3 max-w-[34ch]">{s.summary}</p>
+            {s.field && <FieldDots stage={s.field} teams={teams} />}
             {s.figure && (
               <p className="cq-panel-figure">
                 <span className="cq-panel-figure-value">{s.figure.value}</span>

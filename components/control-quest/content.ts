@@ -103,6 +103,8 @@ export type Stop = {
   topics?: Labelled[];
   /** A figure that shows the field narrowing (finale only). */
   figure?: { value: string; caption: string };
+  /** The dot picture of who is playing at this stage (finale only). */
+  field?: "finalists" | "teams" | "case" | "buzzer" | "room";
 };
 
 /** Day names and topic names are locked: word for word from the official agenda. */
@@ -192,6 +194,7 @@ export const finale = {
       title: "The Top 15",
       summary: "Highest week-long quiz scores earn a seat",
       figure: { value: "15", caption: "Finalists" },
+      field: "finalists",
     },
     {
       id: "team-up",
@@ -200,6 +203,7 @@ export const finale = {
       title: "Five Detective Teams",
       summary: "Five teams of three, each with its own detective identity",
       figure: { value: "5 × 3", caption: "Teams of three" },
+      field: "teams",
     },
     {
       id: "round-1",
@@ -208,6 +212,7 @@ export const finale = {
       title: "The Case",
       summary: "Solve a case as a team: knowledge, analysis, collaboration",
       figure: { value: "5", caption: "Teams on the case" },
+      field: "case",
     },
     {
       id: "round-2",
@@ -216,6 +221,7 @@ export const finale = {
       title: "The Buzzer",
       summary: "Top three teams, rapid fire, speed and precision",
       figure: { value: "3", caption: "Teams on the buzzer" },
+      field: "buzzer",
     },
     {
       id: "audience",
@@ -224,6 +230,7 @@ export const finale = {
       title: "Everyone Plays",
       summary: "Individual prizes for the room",
       figure: { value: "All", caption: "The whole room plays" },
+      field: "room",
     },
   ] as Stop[],
   teamsLabel: { icon: "HatGlasses", text: "The Teams" } as Labelled,

@@ -1284,8 +1284,11 @@
 }
 
 .cq-panel-figure-caption {
-  font-size: var(--cq-text-lg);
-  font-weight: 500;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-title);
+  line-height: 1.05;
+  color: var(--cq-heading);
 }
 
 .cq-text-lg {
@@ -1706,3 +1709,99 @@
 @keyframes cq-node-1 { 0%, 32% { background: var(--cq-card-border); transform: scale(0.8); } 34%, 100% { background: var(--cq-signal); transform: scale(1); } }
 @keyframes cq-node-2 { 0%, 65% { background: var(--cq-card-border); transform: scale(0.8); } 67%, 100% { background: var(--cq-signal); transform: scale(1); } }
 @keyframes cq-node-3 { 0%, 97% { background: var(--cq-card-border); transform: scale(0.8); } 99%, 100% { background: var(--cq-signal); transform: scale(1); } }
+
+/* ---------- The finale field: who is playing, drawn as people ---------- */
+.cq-field {
+  margin-top: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  --dot: clamp(22px, 2.6vw, 38px);
+}
+
+.cq-dot {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--cq-accent);
+}
+
+.cq-field--finalists {
+  display: grid;
+  grid-template-columns: repeat(5, var(--dot));
+  gap: 12px 14px;
+}
+
+.cq-field--teams {
+  position: relative;
+  gap: 18px clamp(18px, 2.4vw, 36px);
+}
+
+.cq-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 300ms ease;
+}
+
+.cq-team-dots {
+  display: grid;
+  grid-template-columns: repeat(2, var(--dot));
+  gap: 6px;
+  justify-items: center;
+}
+
+/* three people per team: two on top, one below */
+.cq-team-dots .cq-dot:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.cq-team-name {
+  max-width: 9ch;
+  text-align: center;
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--cq-text-lg);
+  line-height: 1.1;
+  color: var(--cq-ink);
+}
+
+/* Round 2: the top three teams play on, the other two step back */
+.cq-team[data-out] {
+  opacity: 0.25;
+}
+
+/* Audience round: the whole room joins, as smaller dots around the teams */
+.cq-field-room {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.cq-dot--room {
+  --dot: clamp(12px, 1.2vw, 16px);
+  background: var(--cq-mint);
+  opacity: 0.7;
+}
+
+/* Each dot pops in, one after another, whenever its stage is shown */
+.cq-js .cq-panel[data-active] .cq-dot {
+  animation: cq-dot-in 360ms var(--cq-ease-out) both;
+  animation-delay: calc(var(--d, 0) * 35ms + 120ms);
+}
+
+@keyframes cq-dot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cq-js .cq-panel[data-active] .cq-dot {
+    animation: none;
+  }
+}
