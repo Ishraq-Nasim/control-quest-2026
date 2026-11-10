@@ -14,8 +14,63 @@ type Item = (typeof nav.items)[number];
 export function Nav({ items }: { items: Item[] }) {
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  // White text over green sections, green text over white and mint ones.
+  const [tone, setTone] = useState<"dark" | "light">("dark");
+  // The bar takes the colour of the section beneath it, so it never reads as a band.
+  const [surface, setSurface] = useState<"hero" | "forest" | "white" | "mint">("hero");
+  // The bar slides away while reading down and returns on the way up.
+  const [hidden, setHidden] = useState(false);
   const bar = useRef<HTMLElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  const openRef = useRef(open);
+  openRef.current = open;
+
+  useEffect(() => {
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>(".cq-hero, .cq-theme-forest, .cq-theme-white, .cq-theme-mint"),
+    );
+    let lastY = window.scrollY;
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const probe = (bar.current?.offsetHeight ?? 64) / 2;
+      const under = sections.find((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top <= probe && r.bottom > probe;
+      });
+      const light = !!under && (under.classList.contains("cq-theme-white") || under.classList.contains("cq-theme-mint"));
+      setTone(light ? "light" : "dark");
+      setSurface(
+        !under || under.classList.contains("cq-hero")
+          ? "hero"
+          : under.classList.contains("cq-theme-white")
+            ? "white"
+            : under.classList.contains("cq-theme-mint")
+              ? "mint"
+              : "forest",
+      );
+
+      if (!openRef.current) {
+        if (y < 80 || y < lastY - 4) setHidden(false);
+        else if (y > lastY + 4) setHidden(true);
+      }
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   // Which section is being read: the one crossing a line 40% down the screen.
   useEffect(() => {
@@ -85,7 +140,15 @@ export function Nav({ items }: { items: Item[] }) {
   const button = open ? nav.close : nav.menu;
 
   return (
-    <nav ref={bar} className="cq-nav" aria-label={nav.label}>
+    <nav
+      ref={bar}
+      className="cq-nav"
+      aria-label={nav.label}
+      data-tone={tone}
+      data-surface={surface}
+      data-hidden={hidden && !open ? "" : undefined}
+      onFocusCapture={() => setHidden(false)}
+    >
       <div className="cq-wrap cq-nav-inner">
         <a href="#cq-top" className="cq-nav-home" onClick={() => setOpen(false)}>
           {nav.home}
