@@ -490,71 +490,43 @@
   text-wrap: balance;
 }
 
-/* The detective scene: a backlit figure in drifting mist.
-   Gradients and the glow are the requested noir look (taste-skill-ignore). */
+/* The detective: the watercolor floats on a pale backlight that fades into the
+   section green. The radial light is the requested noir look (taste-skill-ignore). */
 .cq-noir {
   position: relative;
-  aspect-ratio: 5 / 6;
-  overflow: hidden;
+  aspect-ratio: 1 / 1;
   isolation: isolate;
-  background: #030a06;
 }
 
 .cq-noir-glow {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 76% 40%, rgb(214 255 178 / 0.55) 0, rgb(120 200 130 / 0.32) 12%, transparent 34%), /* taste-skill-ignore: backlight */
-    radial-gradient(ellipse at 62% 42%, rgb(70 150 100 / 0.55) 0, rgb(25 70 45 / 0.45) 32%, transparent 70%); /* taste-skill-ignore: backlight */
-}
-
-/* Mist: fractal noise drawn once, then slid sideways (cheap to move) */
-.cq-noir-fog {
-  position: absolute;
-  top: -10%;
-  bottom: -10%;
-  left: 0;
-  width: 200%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0055 0.011' numOctaves='4' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.78 0 0 0 0 0.95 0 0 0 0 0.82 0 0 0 1.1 -0.42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
-  background-size: 640px 640px;
-  background-repeat: repeat;
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 62% 45%, #000 20%, transparent 80%); /* taste-skill-ignore: fades the mist at the edges */
-  mask-image: radial-gradient(ellipse 70% 60% at 62% 45%, #000 20%, transparent 80%); /* taste-skill-ignore: fades the mist at the edges */
-  pointer-events: none;
-}
-
-.cq-noir-fog--back {
-  opacity: 0.75;
-  animation: cq-mist 70s linear infinite;
-}
-
-.cq-noir-fog--front {
-  opacity: 0.28;
-  background-size: 900px 900px;
-  animation: cq-mist 45s linear infinite reverse;
+  background: radial-gradient(closest-side at 55% 44%, #eef6ee 0, #b7d3c2 34%, #3b6d50 64%, rgb(10 29 19 / 0) 100%); /* taste-skill-ignore: backlight */
+  animation: cq-breathe 8s var(--cq-ease-in-out) infinite;
 }
 
 .cq-noir-figure {
-  position: absolute;
-  inset: auto 0 0 -6%;
-  width: 106%;
-  height: auto;
+  position: relative;
+  animation: cq-float 7s var(--cq-ease-in-out) infinite;
+}
+
+.cq-noir-figure img {
   display: block;
+  width: 100%;
+  height: auto;
+  /* the painting fades out before its square edge (taste-skill-ignore: soft edge mask) */
+  -webkit-mask-image: radial-gradient(farthest-side at 50% 46%, #000 72%, transparent 100%); /* taste-skill-ignore: soft edge */
+  mask-image: radial-gradient(farthest-side at 50% 46%, #000 72%, transparent 100%); /* taste-skill-ignore: soft edge */
 }
 
-.cq-noir-lens {
-  animation: cq-lens 5s var(--cq-ease-in-out) infinite;
+@keyframes cq-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -10px, 0); }
 }
 
-@keyframes cq-mist {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
-}
-
-@keyframes cq-lens {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.78; }
+@keyframes cq-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.97); }
 }
 
 
@@ -1210,8 +1182,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cq-noir-fog,
-  .cq-noir-lens,
+  .cq-noir-glow,
+  .cq-noir-figure,
   .cq-js .cq-panel[data-active] {
     animation: none;
   }
