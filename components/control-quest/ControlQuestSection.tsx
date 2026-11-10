@@ -9,7 +9,6 @@ import { Gallery } from "./Gallery";
 import { Label } from "./Label";
 import { Nav } from "./Nav";
 import { findPhoto, listPhotos, type Photo } from "./photos";
-import { RoadLine } from "./Road";
 import { Root } from "./Root";
 import { RouteStops } from "./RouteStops";
 import { ICON_STROKE, icons } from "./icons";
@@ -17,6 +16,7 @@ import bg from "@/public/control-quest/bg.webp";
 import logo from "@/public/control-quest/logo.webp";
 
 const QuoteMark = icons.Quote;
+const RunnerIcon = icons.HatGlasses;
 
 /** Stagger index for an entrance part: heading 0, text 1, visual 2… */
 const at = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -180,19 +180,39 @@ function Numbers() {
 
 function Flow() {
   return (
-    <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section cq-theme-mint">
+    <section id="cq-flow" aria-labelledby="cq-flow-title" className="cq-section cq-theme-mint cq-route-section">
       <div className="cq-wrap" data-reveal>
         <SectionHead id="cq-flow-title" heading={flow.heading} />
-        <ol className="cq-flow">
+        {/* The road: as the section scrolls past, the runner drives it, the road
+            fills in green behind, and each checkpoint lights as it is passed */}
+        <ol className="cq-route">
+          <li className="cq-route-lane" aria-hidden="true">
+            <span className="cq-route-track">
+              <span className="cq-route-fill" />
+            </span>
+            <span className="cq-route-runner">
+              <span className="cq-route-marker">
+                <RunnerIcon strokeWidth={ICON_STROKE} />
+              </span>
+            </span>
+          </li>
           {flow.steps.map((s, i) => (
-            <li key={s.title} className="cq-tile cq-rv" style={at(i + 1)}>
-              <h3 className="cq-h3 cq-tile-title">
-                <Label icon={s.icon}>{s.title}</Label>
-              </h3>
-              <p className="cq-lead cq-muted-on-tile mt-2 max-w-[22ch]">{s.text}</p>
+            <li key={s.title} className="cq-stop" data-pos={i % 2 ? "below" : "above"} data-last={i === flow.steps.length - 1 || undefined}>
+              <span className="cq-stop-node" aria-hidden="true" data-n={i} />
+              <div className="cq-card cq-stop-card cq-rv" style={at(i + 1)}>
+                <p className="cq-stop-fig">
+                  <span className="cq-stop-fig-value">{s.figure.value}</span>
+                  <span className="cq-stop-fig-caption">{s.figure.caption}</span>
+                </p>
+                <h3 className="cq-h3 cq-stop-title">
+                  <Label icon={s.icon} tone="accent">
+                    {s.title}
+                  </Label>
+                </h3>
+                <p className="cq-text-lg mt-2">{s.text}</p>
+              </div>
             </li>
           ))}
-          <RoadLine className="cq-road cq-flow-road" />
         </ol>
       </div>
     </section>

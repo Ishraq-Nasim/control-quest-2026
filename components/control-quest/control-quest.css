@@ -642,61 +642,9 @@
   margin-top: auto;
 }
 
-/* ---------- Flow: tiles that grow ---------- */
-
-.cq-flow {
-  position: relative;
-  display: grid;
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.cq-tile {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: clamp(22px, 2.4vw, 36px);
-  border-radius: 8px;
-  transition: transform 260ms var(--cq-ease-out);
-}
-
-/* On a phone the tiles still grow in order, but stay close to their content */
-.cq-tile:nth-child(1) { min-height: 120px; background: var(--cq-white); color: var(--cq-ink-dark); --cq-heading: var(--cq-forest); }
-.cq-tile:nth-child(2) { min-height: 140px; background: var(--cq-card-border); color: var(--cq-ink-dark); --cq-heading: var(--cq-ink-dark); }
-.cq-tile:nth-child(3) { min-height: 160px; background: var(--cq-road); color: var(--cq-white); --cq-heading: var(--cq-white); }
-.cq-tile:nth-child(4) { min-height: 180px; background: var(--cq-signal); color: var(--cq-forest); --cq-heading: var(--cq-forest); }
-.cq-muted-on-tile { color: inherit; }
-
 .cq-road {
   position: absolute;
   pointer-events: none;
-}
-
-.cq-flow-road {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .cq-flow {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    align-items: end;
-    gap: 12px;
-  }
-  .cq-tile:nth-child(1) { min-height: 240px; }
-  .cq-tile:nth-child(2) { min-height: 290px; }
-  .cq-tile:nth-child(3) { min-height: 340px; }
-  .cq-tile:nth-child(4) { min-height: 390px; }
-  .cq-flow-road {
-    display: block;
-    left: 0;
-    right: 0;
-    bottom: 40px;
-    width: 100%;
-    height: 8px;
-    z-index: 1;
-  }
 }
 
 /* ---------- Stops: the five days and the finale ---------- */
@@ -1113,8 +1061,7 @@
     animation-play-state: paused;
   }
   /* Cards and tiles float up a little under the pointer */
-  .cq-card:hover,
-  .cq-tile:hover {
+  .cq-card:hover {
     transform: translate3d(0, -4px, 0);
   }
   .cq-card:hover {
@@ -1248,12 +1195,10 @@
   .cq-js .cq-panel[data-active] {
     animation: none;
   }
-  .cq-card,
-  .cq-tile {
+  .cq-card {
     transition: background-color 200ms ease;
   }
-  .cq-card:hover,
-  .cq-tile:hover {
+  .cq-card:hover {
     transform: none;
   }
   .cq-hero-media img,
@@ -1450,3 +1395,315 @@
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(0, -10px, 0); }
 }
+
+/* ---------- The Format: a road with four checkpoints ----------
+   Default (no scroll animations, or reduced motion): the finished road,
+   fully green, every checkpoint lit, the runner at the finish. */
+.cq-route-section {
+  view-timeline-name: --cq-route;
+}
+
+.cq-route {
+  --cq-lane: 88px;
+  --cq-marker: 48px;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.cq-route-lane {
+  position: absolute;
+  pointer-events: none;
+}
+
+.cq-route-track {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(109 181 133 / 0.35);
+}
+
+.cq-route-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--cq-road);
+  transform-origin: left center;
+}
+
+.cq-route-runner {
+  position: absolute;
+  inset: 0;
+}
+
+.cq-route-marker {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: var(--cq-marker);
+  height: var(--cq-marker);
+  border-radius: 50%;
+  background: var(--cq-forest);
+  color: var(--cq-white);
+}
+
+.cq-route-marker svg {
+  width: 26px;
+  height: 26px;
+}
+
+.cq-stop {
+  position: relative;
+}
+
+.cq-stop-node {
+  position: absolute;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cq-signal);
+  border: 4px solid var(--cq-mint);
+}
+
+.cq-stop-card {
+  position: relative;
+  border-radius: 8px;
+}
+
+.cq-stop[data-last] .cq-stop-card {
+  background: var(--cq-signal);
+  border-color: var(--cq-signal);
+  color: var(--cq-forest);
+  --cq-heading: var(--cq-forest);
+  --cq-accent: var(--cq-forest);
+}
+
+.cq-stop-fig {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  margin-bottom: 14px;
+}
+
+.cq-stop-fig-value {
+  font-family: var(--cq-font-display), sans-serif;
+  font-weight: 700;
+  font-size: var(--cq-head);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--cq-accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.cq-stop-fig-caption {
+  font-weight: 600;
+  font-size: var(--cq-text-lg);
+}
+
+.cq-stop-title {
+  font-size: var(--cq-title);
+}
+
+/* Phone and tablet: the road runs down the left, checkpoints to its right */
+@media (max-width: 1023px) {
+  .cq-route {
+    padding-left: 64px;
+  }
+  .cq-route-lane {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+  }
+  .cq-route-track {
+    left: 21px;
+    width: 6px;
+    top: 24px;
+    bottom: 24px;
+  }
+  .cq-route-fill {
+    transform-origin: center top;
+  }
+  .cq-route-runner {
+    top: 24px;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+  }
+  .cq-route-marker {
+    left: 0;
+    top: calc(100% - var(--cq-marker) / 2);
+  }
+  .cq-stop-node {
+    left: -53px;
+    top: 26px;
+  }
+  /* title and text on the left, the big figure on the right */
+  .cq-stop-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    align-items: start;
+  }
+  .cq-stop-fig {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    margin-bottom: 0;
+    max-width: 8.5em;
+  }
+  .cq-stop-fig-caption {
+    font-size: var(--cq-body);
+    text-wrap: balance;
+  }
+  .cq-stop-title,
+  .cq-stop-card > .cq-text-lg {
+    grid-column: 1;
+  }
+  .cq-stop-title {
+    grid-row: 1;
+  }
+}
+
+/* Desktop: four columns, checkpoints alternating above and below the lane */
+@media (min-width: 1024px) {
+  .cq-route {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: auto var(--cq-lane) auto;
+    column-gap: 16px;
+    row-gap: 0;
+  }
+  .cq-route-lane {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    position: relative;
+    width: auto;
+    height: var(--cq-lane);
+  }
+  .cq-route-track {
+    left: 12.5%;
+    right: 12.5%;
+    top: calc(50% - 4px);
+    height: 8px;
+  }
+  .cq-route-runner {
+    left: 12.5%;
+    right: 12.5%;
+  }
+  .cq-route-marker {
+    top: calc(50% - var(--cq-marker) / 2);
+    left: calc(100% - var(--cq-marker) / 2);
+  }
+  /* each checkpoint in its own column; the lane shares the middle row beneath them */
+  .cq-stop:nth-of-type(2) { grid-column: 1; }
+  .cq-stop:nth-of-type(3) { grid-column: 2; }
+  .cq-stop:nth-of-type(4) { grid-column: 3; }
+  .cq-stop:nth-of-type(5) { grid-column: 4; }
+  .cq-stop {
+    grid-row: 1 / 4;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cq-stop-card {
+    width: 100%;
+  }
+  .cq-stop-node {
+    grid-row: 2;
+    position: relative;
+    align-self: center;
+    justify-self: center;
+  }
+  /* a short stem joins each card to its checkpoint */
+  .cq-stop-node::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 3px;
+    height: calc(var(--cq-lane) / 2 - 11px);
+    margin-left: -1.5px;
+    background: var(--cq-card-border);
+  }
+  .cq-stop[data-pos="above"] .cq-stop-node::before {
+    bottom: 100%;
+  }
+  .cq-stop[data-pos="below"] .cq-stop-node::before {
+    top: 100%;
+  }
+  .cq-stop[data-pos="above"] .cq-stop-card {
+    grid-row: 1;
+    align-self: end;
+  }
+  .cq-stop[data-pos="below"] .cq-stop-card {
+    grid-row: 3;
+    align-self: start;
+  }
+  /* empty half of each column stays empty, so the cards zig-zag */
+  .cq-stop[data-pos="above"] {
+    padding-bottom: 0;
+  }
+}
+
+/* Scroll-driven: the road fills, the runner drives, checkpoints light in turn */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cq-route-fill,
+    .cq-route-runner,
+    .cq-stop-node {
+      animation-timeline: --cq-route;
+      animation-range: entry 70% exit 20%;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+    .cq-route-fill {
+      animation-name: cq-route-fill-x;
+    }
+    .cq-route-runner {
+      animation-name: cq-route-run-x;
+    }
+    .cq-stop-node[data-n="0"] { animation-name: cq-node-0; }
+    .cq-stop-node[data-n="1"] { animation-name: cq-node-1; }
+    .cq-stop-node[data-n="2"] { animation-name: cq-node-2; }
+    .cq-stop-node[data-n="3"] { animation-name: cq-node-3; }
+  }
+  @media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
+    .cq-route-fill {
+      animation-name: cq-route-fill-y;
+    }
+    .cq-route-runner {
+      animation-name: cq-route-run-y;
+    }
+  }
+}
+
+@keyframes cq-route-fill-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes cq-route-fill-y {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes cq-route-run-x {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes cq-route-run-y {
+  from { transform: translate3d(0, -100%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+/* A checkpoint is pale until the runner reaches it, then turns Signal Green */
+@keyframes cq-node-0 { 0% { background: var(--cq-card-border); transform: scale(0.8); } 2%, 100% { background: var(--cq-signal); transform: scale(1); } }
+@keyframes cq-node-1 { 0%, 32% { background: var(--cq-card-border); transform: scale(0.8); } 34%, 100% { background: var(--cq-signal); transform: scale(1); } }
+@keyframes cq-node-2 { 0%, 65% { background: var(--cq-card-border); transform: scale(0.8); } 67%, 100% { background: var(--cq-signal); transform: scale(1); } }
+@keyframes cq-node-3 { 0%, 97% { background: var(--cq-card-border); transform: scale(0.8); } 99%, 100% { background: var(--cq-signal); transform: scale(1); } }

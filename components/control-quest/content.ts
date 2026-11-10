@@ -85,11 +85,11 @@ export const numbers = {
 export const flow = {
   heading: { icon: "Route", text: "How The Quest Worked" } as Labelled,
   steps: [
-    { icon: "Presentation", title: "Learn", text: "Daily sessions, 15+ speakers" },
-    { icon: "ClipboardCheck", title: "Test", text: "Daily quizzes, scores carried all week" },
-    { icon: "ListFilter", title: "Qualify", text: "Top 15 to the finale" },
-    { icon: "SearchCheck", title: "Solve", text: "Teams crack the final case" },
-  ] as { icon: IconName; title: string; text: string }[],
+    { icon: "Presentation", title: "Learn", text: "Daily sessions, 15+ speakers", figure: { value: "15+", caption: "Speakers" } },
+    { icon: "ClipboardCheck", title: "Test", text: "Daily quizzes, scores carried all week", figure: { value: "5", caption: "Days of quizzes" } },
+    { icon: "ListFilter", title: "Qualify", text: "Top 15 to the finale", figure: { value: "15", caption: "Finalists" } },
+    { icon: "SearchCheck", title: "Solve", text: "Teams crack the final case", figure: { value: "5", caption: "Detective teams" } },
+  ] as { icon: IconName; title: string; text: string; figure: { value: string; caption: string } }[],
 };
 
 export type Stop = {
